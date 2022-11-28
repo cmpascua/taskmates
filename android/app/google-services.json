@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "74427113393",
+    "project_id": "cmsc23-d1l-auth-cmpascua",
+    "storage_bucket": "cmsc23-d1l-auth-cmpascua.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74427113393:android:020fe43031a54b5cdda790",
+        "android_client_info": {
+          "package_name": "com.example.week7_networking_discussion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74427113393-aioskf5pp22q11csv4um4gjc3242ku2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU-cpLTNdgLz9A2vuCJ3SL2Xv71kEZ2rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74427113393-aioskf5pp22q11csv4um4gjc3242ku2p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
