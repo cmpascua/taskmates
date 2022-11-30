@@ -2,14 +2,15 @@
     Author: Christian Jewel M. Pascua
     Section: D-1L
     Date created: 20 Nov 2022
-    Exercise number: 7
-    Program description: A Flutter todo app with user login functionality.
+    Program description: A Flutter shared todo list app.
 */
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:week7_networking_discussion/providers/todo_provider.dart';
 import 'package:week7_networking_discussion/providers/auth_provider.dart';
+import 'package:week7_networking_discussion/screens/home_page.dart';
 import 'package:week7_networking_discussion/screens/todo_page.dart';
 import 'package:week7_networking_discussion/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: ((context) => TodoListProvider())),
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
+        ChangeNotifierProvider(create: ((context) => FriendListProvider())),
       ],
       child: MyApp(),
     ),
@@ -62,7 +64,7 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (context.watch<AuthProvider>().isAuthenticated) {
-      return const TodoPage();
+      return const HomePage();
     } else {
       return const LoginPage();
     }
