@@ -9,8 +9,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/providers/auth_provider.dart';
+import 'package:week7_networking_discussion/screens/friends_appbar.dart';
 import 'package:week7_networking_discussion/screens/friends_page.dart';
+import 'package:week7_networking_discussion/screens/profile_appbar.dart';
+import 'package:week7_networking_discussion/screens/profile_page.dart';
+import 'package:week7_networking_discussion/screens/todo_appbar.dart';
 import 'package:week7_networking_discussion/screens/todo_page.dart';
+import 'package:week7_networking_discussion/screens/headerNav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,43 +27,51 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
   int currentPage = 0;
-  List<Widget> pages = const [TodoPage(), FriendPage()];
+  List<Widget> pages = const [TodoPage(), FriendPage(), ProfilePage()];
+  List<Widget> appBars = const [TodoAppBar(), FriendsAppBar(), ProfileAppBar()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-        DrawerHeader(
-          decoration: const BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: Container(
-            alignment: Alignment.bottomLeft,
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              user.email!,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-        ListTile(
-          title: const Text('Logout'),
-          onTap: () {
-            context.read<AuthProvider>().signOut();
-            Navigator.pop(context);
-          },
-        ),
-      ])),
-      appBar: AppBar(
-        title: const Text("Tasks"),
-      ),
+      //   drawer: Drawer(
+      //       child: ListView(padding: EdgeInsets.zero, children: [
+      //     DrawerHeader(
+      //       decoration: const BoxDecoration(
+      //         color: Colors.blue,
+      //       ),
+      //       child: Container(
+      //         alignment: Alignment.bottomLeft,
+      //         padding: const EdgeInsets.symmetric(vertical: 10),
+      //         child: Text(
+      //           user.email!,
+      //           style: const TextStyle(color: Colors.white),
+      //         ),
+      //       ),
+      //     ),
+      //     ListTile(
+      //       title: const Text('Logout'),
+      //       onTap: () {
+      //         context.read<AuthProvider>().signOut();
+      //         Navigator.pop(context);
+      //       },
+      //     ),
+      //   ])),
+      // appBar: AppBar(
+      //   title: const Text("Tasks"),
+      // ),
+      // appBar: PreferredSize(
+      //   preferredSize: const Size.fromHeight(56), // 56 is default height
+      //   child: appBars[currentPage],
+      // ),
+      appBar: headerNav(title: 'Home Page'),
       body: pages[currentPage],
       bottomNavigationBar: NavigationBar(
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: "Home"),
           NavigationDestination(
               icon: Icon(Icons.supervisor_account_outlined), label: "Friends"),
+          NavigationDestination(
+              icon: Icon(Icons.person_pin_circle_rounded), label: "Profile"),
         ],
         onDestinationSelected: (int index) {
           setState(() {
