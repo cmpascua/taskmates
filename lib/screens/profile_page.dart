@@ -34,7 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
             onPressed: () {
               context.read<AuthProvider>().signOut();
-              Navigator.pop(context);
             },
             child: const Text("Logout"),
           ),

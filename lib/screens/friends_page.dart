@@ -22,8 +22,8 @@ class FriendPage extends StatefulWidget {
 
 class _FriendPageState extends State<FriendPage> {
   static const String userID = "sampleid1";
-  var searchString = "";
-  bool _searchBoolean = false;
+  // var searchString = "";
+  // bool _searchBoolean = false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _FriendPageState extends State<FriendPage> {
             return const Center(
               child: Text("No Friends Found"),
             );
-          } else if (_searchBoolean) {
+          } else if (context.watch<FriendListProvider>().searchBool) {
             return ListView.builder(
                 itemCount: snapshot.data?.docs.length,
                 itemBuilder: (context, index) {
@@ -78,11 +78,12 @@ class _FriendPageState extends State<FriendPage> {
                   Friend friend = Friend.fromJson(snapshot.data?.docs[index]
                       .data() as Map<String, dynamic>);
 
-                  if (searchString.isEmpty) {
+                  if (context.watch<FriendListProvider>().searchText.isEmpty) {
                     return Container();
                   }
 
-                  if (friend.displayName.toString().startsWith(searchString)) {
+                  if (friend.displayName.toString().startsWith(
+                      context.watch<FriendListProvider>().searchText)) {
                     return ListTile(
                       key: Key(index.toString()),
                       title: Padding(
@@ -219,31 +220,31 @@ class _FriendPageState extends State<FriendPage> {
     // ),
   }
 
-  Widget _searchTextField() {
-    return TextField(
-      onChanged: (value) {
-        setState(() {
-          searchString = value;
-        });
-      },
-      autofocus: true,
-      cursorColor: Colors.white,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-      ),
-      textInputAction: TextInputAction.search,
-      decoration: const InputDecoration(
-        enabledBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-        focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-        hintText: "Search by display name",
-        hintStyle: TextStyle(
-          color: Colors.white60,
-          fontSize: 20,
-        ),
-      ),
-    );
-  }
+  // Widget _searchTextField() {
+  //   return TextField(
+  //     onChanged: (value) {
+  //       setState(() {
+  //         searchString = value;
+  //       });
+  //     },
+  //     autofocus: true,
+  //     cursorColor: Colors.white,
+  //     style: const TextStyle(
+  //       color: Colors.white,
+  //       fontSize: 20,
+  //     ),
+  //     textInputAction: TextInputAction.search,
+  //     decoration: const InputDecoration(
+  //       enabledBorder:
+  //           UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+  //       focusedBorder:
+  //           UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+  //       hintText: "Search by display name",
+  //       hintStyle: TextStyle(
+  //         color: Colors.white60,
+  //         fontSize: 20,
+  //       ),
+  //     ),
+  //   );
+  // }
 }

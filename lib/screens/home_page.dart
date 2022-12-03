@@ -15,7 +15,6 @@ import 'package:week7_networking_discussion/screens/profile_appbar.dart';
 import 'package:week7_networking_discussion/screens/profile_page.dart';
 import 'package:week7_networking_discussion/screens/todo_appbar.dart';
 import 'package:week7_networking_discussion/screens/todo_page.dart';
-import 'package:week7_networking_discussion/screens/headerNav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,37 +32,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //   drawer: Drawer(
-      //       child: ListView(padding: EdgeInsets.zero, children: [
-      //     DrawerHeader(
-      //       decoration: const BoxDecoration(
-      //         color: Colors.blue,
-      //       ),
-      //       child: Container(
-      //         alignment: Alignment.bottomLeft,
-      //         padding: const EdgeInsets.symmetric(vertical: 10),
-      //         child: Text(
-      //           user.email!,
-      //           style: const TextStyle(color: Colors.white),
-      //         ),
-      //       ),
-      //     ),
-      //     ListTile(
-      //       title: const Text('Logout'),
-      //       onTap: () {
-      //         context.read<AuthProvider>().signOut();
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //   ])),
-      // appBar: AppBar(
-      //   title: const Text("Tasks"),
-      // ),
-      // appBar: PreferredSize(
-      //   preferredSize: const Size.fromHeight(56), // 56 is default height
-      //   child: appBars[currentPage],
-      // ),
-      appBar: headerNav(title: 'Home Page'),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: appBars[currentPage],
+      ),
       body: pages[currentPage],
       bottomNavigationBar: NavigationBar(
         destinations: const [

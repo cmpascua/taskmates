@@ -5,6 +5,8 @@ class ProfileAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("About @username");
+    return AppBar(
+      title: const Text("About @username"),
+    );
   }
 }

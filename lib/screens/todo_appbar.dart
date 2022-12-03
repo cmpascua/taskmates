@@ -5,6 +5,8 @@ class TodoAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Tasks");
+    return AppBar(
+      title: const Text("Tasks"),
+    );
   }
 }
