@@ -73,6 +73,15 @@ class _TodoPageState extends State<TodoPage> {
                   ),
                   child: ListTile(
                     title: Text(todo.title),
+                    onTap: () {
+                      context.read<TodoListProvider>().changeSelectedTodo(todo);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => TodoModal(
+                          type: 'Edit',
+                        ),
+                      );
+                    },
                     leading: Checkbox(
                       value: todo.completed,
                       onChanged: (bool? value) {
@@ -80,9 +89,6 @@ class _TodoPageState extends State<TodoPage> {
                             .read<TodoListProvider>()
                             .changeSelectedTodo(todo);
                         context.read<TodoListProvider>().toggleStatus(value!);
-                        // context
-                        //     .read<TodoListProvider>()
-                        //     .toggleStatus(index, value!);
                       },
                     ),
                     trailing: Row(
@@ -90,24 +96,17 @@ class _TodoPageState extends State<TodoPage> {
                       children: [
                         IconButton(
                           onPressed: () {
+                            // context
+                            //     .read<TodoListProvider>()
+                            //     .changeSelectedTodo(todo);
                             // showDialog(
                             //   context: context,
                             //   builder: (BuildContext context) => TodoModal(
-                            //     type: 'Edit',
-                            //     todoIndex: index,
+                            //     type: 'Share',
                             //   ),
                             // );
-                            context
-                                .read<TodoListProvider>()
-                                .changeSelectedTodo(todo);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => TodoModal(
-                                type: 'Edit',
-                              ),
-                            );
                           },
-                          icon: const Icon(Icons.create_outlined),
+                          icon: const Icon(Icons.share),
                         ),
                         IconButton(
                           onPressed: () {
@@ -150,16 +149,5 @@ class _TodoPageState extends State<TodoPage> {
         ),
       ],
     );
-    // floatingActionButton: FloatingActionButton(
-    //   onPressed: () {
-    //     showDialog(
-    //       context: context,
-    //       builder: (BuildContext context) => TodoModal(
-    //         type: 'Add',
-    //       ),
-    //     );
-    //   },
-    //   child: const Icon(Icons.add_outlined),
-    // ),
   }
 }
