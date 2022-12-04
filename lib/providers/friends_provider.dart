@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:week7_networking_discussion/models/friends_model.dart';
+import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/api/firebase_friends_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -16,7 +16,7 @@ class FriendListProvider with ChangeNotifier {
   static const String userID = "sampleid1";
   var searchString = "";
   bool searchBoolean = false;
-  Friend? _selectedFriend;
+  User? _selectedFriend;
 
   FriendListProvider() {
     firebaseService = FirebaseFriendAPI();
@@ -24,13 +24,13 @@ class FriendListProvider with ChangeNotifier {
   }
 
   // getter
-  // Future<List<Friend>> get friend => _friendList;
+  // Future<List<User>> get friend => _friendList;
   Stream<QuerySnapshot> get friends => _friendsStream;
-  Friend get selected => _selectedFriend!;
+  User get selected => _selectedFriend!;
   String get searchText => searchString;
   bool get searchBool => searchBoolean;
 
-  changeSelectedFriend(String itemID, Friend item) {
+  changeSelectedFriend(String itemID, User item) {
     item.id = itemID;
     _selectedFriend = item;
   }

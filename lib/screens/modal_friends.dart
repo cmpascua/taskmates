@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/models/friends_model.dart';
+import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/providers/friends_provider.dart';
 
 class FriendModal extends StatelessWidget {
@@ -40,7 +40,7 @@ class FriendModal extends StatelessWidget {
       case 'Unfriend':
         {
           return Text(
-            "Are you sure you want to unfriend '${context.read<FriendListProvider>().selected.displayName}'?",
+            "Are you sure you want to unfriend '${context.read<FriendListProvider>().selected.userName}'?",
           );
         }
       default:

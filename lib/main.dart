@@ -14,7 +14,7 @@ import 'package:week7_networking_discussion/screens/home_page.dart';
 import 'package:week7_networking_discussion/screens/todo_page.dart';
 import 'package:week7_networking_discussion/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:week7_networking_discussion/screens/utils.dart';
+import 'package:week7_networking_discussion/utils/errorbar.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,6 +22,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // await UserPreferences.init();
 
   runApp(
     MultiProvider(
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
-      scaffoldMessengerKey: Utils.messengerKey,
+      scaffoldMessengerKey: Errorbar.messengerKey,
       debugShowCheckedModeBanner: false,
       title: "Do Your Bit",
       initialRoute: '/',

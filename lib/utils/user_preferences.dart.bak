@@ -1,0 +1,22 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/users_model.dart';
+
+class UserPreferences {
+  static SharedPreferences _preferences;
+
+  static Future init() async {
+    return _preferences = await SharedPreferences.getInstance();
+  }
+
+  static Future setUser(User user) async {
+    final json = jsonEncode(user.toJson(user));
+    final idUser = user.id;
+    await _preferences.setString(idUser!, json);
+  }
+
+  static User getUser(String idUser) {
+    final json = _preferences.getString(idUser);
+    return User.fromJson(jsonDecode(json!));
+  }
+}

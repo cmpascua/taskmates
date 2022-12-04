@@ -8,14 +8,25 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:week7_networking_discussion/screens/utils.dart';
+import 'package:week7_networking_discussion/utils/errorbar.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseFirestore db = FirebaseFirestore.instance;
+  late String uid = "";
+
+  void inputData() {
+    final User? user = auth.currentUser;
+    uid = user!.uid;
+    print(uid);
+  }
 
   Stream<User?> getUser() {
     return auth.authStateChanges();
+  }
+
+  String getUserID() {
+    return uid;
   }
 
   void signIn(String email, String password) async {
@@ -23,8 +34,9 @@ class FirebaseAuthAPI {
     try {
       final credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      inputData();
     } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+      Errorbar.showSnackBar(e.message);
     }
   }
 
@@ -45,7 +57,7 @@ class FirebaseAuthAPI {
             userName, location, birthday);
       }
     } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+      Errorbar.showSnackBar(e.message);
     } catch (e) {
       print(e);
     }

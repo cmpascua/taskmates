@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/models/friends_model.dart';
+import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
@@ -75,24 +75,24 @@ class _FriendPageState extends State<FriendPage> {
                 itemCount: snapshot.data?.docs.length,
                 itemBuilder: (context, index) {
                   String friendID = snapshot.data!.docs[index].id;
-                  Friend friend = Friend.fromJson(snapshot.data?.docs[index]
-                      .data() as Map<String, dynamic>);
+                  User friend = User.fromJson(snapshot.data?.docs[index].data()
+                      as Map<String, dynamic>);
 
                   if (context.watch<FriendListProvider>().searchText.isEmpty) {
                     return Container();
                   }
 
-                  if (friend.displayName.toString().startsWith(
+                  if (friend.userName.toString().startsWith(
                       context.watch<FriendListProvider>().searchText)) {
                     return ListTile(
                       key: Key(index.toString()),
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(friend.displayName),
+                        child: Text(friend.firstName),
                       ),
                       subtitle: Text("@${friend.userName}"),
                       leading: Initicon(
-                        text: friend.displayName,
+                        text: friend.firstName,
                         size: 40,
                       ),
                       trailing: Row(
@@ -141,18 +141,18 @@ class _FriendPageState extends State<FriendPage> {
               itemCount: userFriends.length,
               itemBuilder: ((context, index) {
                 String friendID = userFriends[index];
-                Friend friend = Friend.fromJson(snapshot.data?.docs
+                User friend = User.fromJson(snapshot.data?.docs
                     .firstWhere((doc) => doc.id == friendID)
                     .data() as Map<String, dynamic>);
                 return ListTile(
                   key: Key(index.toString()),
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(friend.displayName),
+                    child: Text(friend.firstName),
                   ),
                   subtitle: Text("@${friend.userName}"),
                   leading: Initicon(
-                    text: friend.displayName,
+                    text: friend.firstName,
                     size: 40,
                   ),
                   trailing: Row(

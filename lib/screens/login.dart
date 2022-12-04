@@ -65,11 +65,12 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           final form = _loginKey.currentState;
 
           if (form!.validate()) {
             form.save();
+            // await UserSimplePreferences.setUsername();
             context.read<AuthProvider>().signIn(loginFields[0], loginFields[1]);
           }
         },
