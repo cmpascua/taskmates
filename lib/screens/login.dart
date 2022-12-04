@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final email = TextFormField(
       decoration: const InputDecoration(
+        icon: Icon(Icons.email),
         labelText: "Email",
         helperText: "",
       ),
@@ -45,12 +46,13 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: const InputDecoration(
+        icon: Icon(Icons.lock),
         labelText: "Password",
         helperText: "",
       ),
       validator: (password) {
-        return password != null && password.length < 6
-            ? "Password must be at least 6 characters!"
+        return password != null && password.length < 8
+            ? "Enter a password!"
             : null;
       },
       onSaved: (value) {
