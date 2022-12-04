@@ -213,11 +213,14 @@ class _SignupPageState extends State<SignupPage> {
 
     final backButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: ElevatedButton(
+      child: TextButton(
+        style: TextButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 14),
+        ),
         onPressed: () async {
           Navigator.pop(context);
         },
-        child: const Text("Back", style: TextStyle(color: Colors.white)),
+        child: const Text("Go back to login screen"),
       ),
     );
 
@@ -236,6 +239,7 @@ class _SignupPageState extends State<SignupPage> {
                 style: TextStyle(
                   fontSize: 25,
                   height: 5,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               name,

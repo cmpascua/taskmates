@@ -59,6 +59,9 @@ class FirebaseAuthAPI {
       String userName,
       String location,
       String birthday) async {
+    List<String> friends = [];
+    List<String> receivedFriendRequests = [];
+    List<String> sentFriendRequests = [];
     try {
       await db.collection("users").doc(uid).set({
         "email": email,
@@ -66,7 +69,10 @@ class FirebaseAuthAPI {
         "lastName": lastName,
         "userName": userName,
         "location": location,
-        "birthday": birthday
+        "birthday": birthday,
+        "friends": friends,
+        "receivedFriendRequests": receivedFriendRequests,
+        "sentFriendRequests": sentFriendRequests,
       });
     } on FirebaseException catch (e) {
       print(e.message);

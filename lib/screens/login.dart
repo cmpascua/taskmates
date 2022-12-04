@@ -77,9 +77,12 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final logoutButton = Padding(
+    final signupButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: ElevatedButton(
+      child: TextButton(
+        style: TextButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 14),
+        ),
         onPressed: () async {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -87,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         },
-        child: const Text("Sign Up", style: TextStyle(color: Colors.white)),
+        child: const Text("Got no account yet? Click here to sign up!"),
       ),
     );
 
@@ -106,12 +109,13 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                   fontSize: 25,
                   height: 7,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               email,
               password,
               loginButton,
-              logoutButton,
+              signupButton,
             ],
           ),
         ),

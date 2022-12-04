@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       scaffoldMessengerKey: Utils.messengerKey,
       debugShowCheckedModeBanner: false,
-      title: 'SimpleTodo',
+      title: "Do Your Bit",
       initialRoute: '/',
       routes: {'/': (context) => const AuthWrapper()},
       theme: ThemeData(
