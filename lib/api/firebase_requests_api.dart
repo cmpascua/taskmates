@@ -7,33 +7,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseFriendAPI {
+class FirebaseRequestAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
 
   Stream<QuerySnapshot> getAllFriends() {
     return db.collection("users").snapshots();
-  }
-
-  // user sends friend request to newFriend
-  Future<String> sendRequest(String? userID, String? newFriendID) async {
-    try {
-      print("Added Friend: $newFriendID");
-
-      //user appends newFriend to their sentFriendRequest
-      await db.collection("users").doc(userID).update({
-        "sentFriendRequests": FieldValue.arrayUnion([newFriendID])
-      });
-
-      //user appends themselves to newFriend's receivedFriendRequests
-      await db.collection("users").doc(newFriendID).update({
-        "receivedFriendRequests": FieldValue.arrayUnion([userID])
-      });
-
-      return "Sent friend request!";
-    } on FirebaseException catch (e) {
-      return "Failed with error '${e.code}: ${e.message}";
-    }
   }
 
   // user accepts friend request of newFriend
@@ -85,27 +64,6 @@ class FirebaseFriendAPI {
       return "Rejected friend request!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
-    }
-  }
-
-  // user unfriends newFriend
-  Future<String> unfriend(String? userID, String? newFriendID) async {
-    try {
-      print("Deleted Friend: $newFriendID");
-
-      // user removes newFriend from their friends
-      await db.collection("users").doc(userID).update({
-        "friends": FieldValue.arrayRemove([newFriendID])
-      });
-
-      // user removes themselves from newFriend's friends
-      await db.collection("users").doc(newFriendID).update({
-        "friends": FieldValue.arrayRemove([userID])
-      });
-
-      return "Successfully deleted friend!";
-    } on FirebaseException catch (e) {
-      return "Failed friend request with error '${e.code}: ${e.message}";
     }
   }
 }

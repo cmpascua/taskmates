@@ -21,7 +21,7 @@ class RequestsPage extends StatefulWidget {
 }
 
 class _RequestsPageState extends State<RequestsPage> {
-  static const String userID = "sampleid1";
+  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
   bool _searchBoolean = false;
 
   @override
@@ -89,11 +89,11 @@ class _RequestsPageState extends State<RequestsPage> {
                   key: Key(friendID.toString()),
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(friend.firstName),
+                    child: Text("${friend.firstName} " " ${friend.lastName}"),
                   ),
                   subtitle: Text("@${friend.userName}"),
                   leading: Initicon(
-                    text: friend.firstName,
+                    text: "${friend.firstName} " " ${friend.lastName}",
                     size: 40,
                   ),
                   trailing: Row(

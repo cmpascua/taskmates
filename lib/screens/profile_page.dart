@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:week7_networking_discussion/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:week7_networking_discussion/providers/requests_provider.dart';
+import 'package:week7_networking_discussion/screens/requests_page.dart';
+import '../models/users_model.dart';
+// import '../providers/friends_provider.dart';
+import '../providers/requests_provider.dart';
+import 'modal_friends.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,34 +20,142 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    // String userID = context.read<AuthProvider>().userID();
+    // print(userID);
+    String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+    Stream<QuerySnapshot> friendsStream =
+        context.watch<RequestListProvider>().friends;
+
     // return buildAvatar();
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildAvatar(),
-          const SizedBox(
-            height: 12,
-          ),
-          buildName(),
-          const SizedBox(height: 32.0),
-          buildUserDetails(context),
-          const SizedBox(height: 32.0),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                shape: const StadiumBorder(),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
-            onPressed: () {
-              context.read<AuthProvider>().signOut();
-            },
-            child: const Text("Logout"),
-          ),
-          // const SizedBox(height: 32.0),
-          // buildDetails(),
-        ],
-      ),
+    return ListView(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 32.0),
+            buildAvatar(),
+            const SizedBox(
+              height: 12,
+            ),
+            buildName(),
+            const SizedBox(height: 32.0),
+            buildUserDetails(context),
+            const SizedBox(height: 32.0),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  shape: const StadiumBorder(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
+              onPressed: () {
+                context.read<AuthProvider>().signOut();
+              },
+              child: const Text("Logout"),
+            ),
+            const SizedBox(height: 48.0),
+            const Text("Received Friend Requests",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: StreamBuilder(
+                stream: friendsStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error encountered! ${snapshot.error}"),
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                      // child: Text("Loading..."),
+                    );
+                  } else if (!snapshot.hasData) {
+                    return const Center(
+                      child: Text("No Friend Requests Found"),
+                    );
+                  } else {
+                    // if (snapshot.data?.docs
+                    //     .firstWhere(
+                    //         (doc) => doc.id == userID)["receivedFriendRequests"]
+                    //     .isEmpty) {
+                    var receivedRequests = snapshot.data?.docs.firstWhere(
+                        (doc) => doc.id == userID)["receivedFriendRequests"];
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: receivedRequests.length,
+                      itemBuilder: ((context, index) {
+                        String friendID = receivedRequests[index];
+                        User friend = User.fromJson(snapshot.data?.docs
+                            .firstWhere((doc) => doc.id == friendID)
+                            .data() as Map<String, dynamic>);
+                        return Card(
+                          child: ListTile(
+                            key: Key(friendID.toString()),
+                            title: Padding(
+                              padding: const EdgeInsets.only(bottom: 5.0),
+                              child: Text(
+                                  friend.firstName + " " + friend.lastName),
+                            ),
+                            subtitle: Text("@${friend.userName}"),
+                            leading: Initicon(
+                              text: friend.firstName + " " + friend.lastName,
+                              size: 40,
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    context
+                                        .read<RequestListProvider>()
+                                        .changeSelectedFriend(friendID, friend);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          FriendModal(
+                                        type: 'Accept',
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.check),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    context
+                                        .read<RequestListProvider>()
+                                        .changeSelectedFriend(friendID, friend);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          FriendModal(
+                                        type: 'Reject',
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.close),
+                                )
+                              ],
+                            ),
+                            onTap: () {},
+                          ),
+                        );
+                      }),
+                    );
+                  }
+                  // else {
+                  //   return const Center(
+                  //     child: Text("No Friend Requests Found"),
+                  //   );
+                  // }
+                },
+              ),
+            ),
+            // buildDetails(),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -87,6 +202,96 @@ Widget buildDetails() {
     ),
   );
 }
+
+// Widget buildRequests() {
+//   return Container(
+//     child: StreamBuilder(
+//         stream: friendsStream,
+//         builder: (context, snapshot) {
+//           if (snapshot.hasError) {
+//             return Center(
+//               child: Text("Error encountered! ${snapshot.error}"),
+//             );
+//           } else if (snapshot.connectionState == ConnectionState.waiting) {
+//             return const Center(
+//               child: CircularProgressIndicator(),
+//               // child: Text("Loading..."),
+//             );
+//           } else if (!snapshot.hasData) {
+//             return const Center(
+//               child: Text("No Friend Requests Found"),
+//             );
+//           }
+
+//           if (snapshot.data?.docs
+//               .firstWhere((doc) => doc.id == userID)["receivedFriendRequests"]
+//               .isEmpty) {
+//             var receivedRequests = snapshot.data?.docs.firstWhere(
+//                 (doc) => doc.id == userID)["receivedFriendRequests"];
+//             return ListView.builder(
+//               itemCount: receivedRequests.length,
+//               itemBuilder: ((context, index) {
+//                 String friendID = receivedRequests[index];
+//                 User friend = User.fromJson(snapshot.data?.docs
+//                     .firstWhere((doc) => doc.id == friendID)
+//                     .data() as Map<String, dynamic>);
+//                 return ListTile(
+//                   key: Key(friendID.toString()),
+//                   title: Padding(
+//                     padding: const EdgeInsets.only(bottom: 5.0),
+//                     child: Text("${friend.firstName} " " ${friend.lastName}"),
+//                   ),
+//                   subtitle: Text("@${friend.userName}"),
+//                   leading: Initicon(
+//                     text: "${friend.firstName} " " ${friend.lastName}",
+//                     size: 40,
+//                   ),
+//                   trailing: Row(
+//                     mainAxisSize: MainAxisSize.min,
+//                     children: [
+//                       IconButton(
+//                         onPressed: () {
+//                           context
+//                               .read<FriendListProvider>()
+//                               .changeSelectedFriend(friendID, friend);
+//                           showDialog(
+//                             context: context,
+//                             builder: (BuildContext context) => FriendModal(
+//                               type: 'Send',
+//                             ),
+//                           );
+//                         },
+//                         icon: const Icon(Icons.person_add_alt_outlined),
+//                       ),
+//                       IconButton(
+//                         onPressed: () {
+//                           context
+//                               .read<FriendListProvider>()
+//                               .changeSelectedFriend(friendID, friend);
+//                           showDialog(
+//                             context: context,
+//                             builder: (BuildContext context) => FriendModal(
+//                               type: 'Unfriend',
+//                             ),
+//                           );
+//                         },
+//                         icon: const Icon(Icons.delete_outline),
+//                       )
+//                     ],
+//                   ),
+//                   onTap: () {},
+//                 );
+//               }),
+//             );
+//           } else {
+//             return const Center(
+//               child: Text("No Friend Requests Found"),
+//             );
+//           }
+//         },
+//       ),
+//   )
+// }
 
 Widget buildUserDetails(BuildContext context) {
   return Row(

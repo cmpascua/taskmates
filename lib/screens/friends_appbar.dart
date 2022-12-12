@@ -51,7 +51,7 @@ class _FriendsAppBarState extends State<FriendsAppBar> {
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
         focusedBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-        hintText: "Search by display name",
+        hintText: "Search by username",
         hintStyle: TextStyle(
           color: Colors.white60,
           fontSize: 20,

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/providers/friends_provider.dart';
+import '../providers/requests_provider.dart';
 
 class FriendModal extends StatelessWidget {
   String type;
@@ -62,7 +63,7 @@ class FriendModal extends StatelessWidget {
             }
           case 'Accept':
             {
-              context.read<FriendListProvider>().acceptRequest();
+              context.read<RequestListProvider>().acceptRequest();
 
               // Remove dialog after editing
               Navigator.of(context).pop();
@@ -70,7 +71,7 @@ class FriendModal extends StatelessWidget {
             }
           case 'Reject':
             {
-              context.read<FriendListProvider>().rejectRequest();
+              context.read<RequestListProvider>().rejectRequest();
 
               // Remove dialog after editing
               Navigator.of(context).pop();

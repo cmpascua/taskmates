@@ -14,11 +14,13 @@ class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   late String uid = "";
+  late User userData;
 
-  void inputData() {
+  void saveUserData() {
     final User? user = auth.currentUser;
     uid = user!.uid;
-    print(uid);
+
+    // userData = User.fromJson(db.collection("users").doc(uid));
   }
 
   Stream<User?> getUser() {
@@ -29,12 +31,16 @@ class FirebaseAuthAPI {
     return uid;
   }
 
+  DocumentReference<Map<String, dynamic>> getUserDetails(String userID) {
+    return db.collection("users").doc(userID);
+  }
+
   void signIn(String email, String password) async {
     UserCredential credential;
     try {
       final credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      inputData();
+      saveUserData();
     } on FirebaseAuthException catch (e) {
       Errorbar.showSnackBar(e.message);
     }

@@ -7,19 +7,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:week7_networking_discussion/models/users_model.dart';
-import 'package:week7_networking_discussion/api/firebase_friends_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../api/firebase_requests_api.dart';
 
-class FriendListProvider with ChangeNotifier {
-  late FirebaseFriendAPI firebaseService;
+class RequestListProvider with ChangeNotifier {
+  late FirebaseRequestAPI firebaseService;
   late Stream<QuerySnapshot> _friendsStream;
   static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
   var searchString = "";
   bool searchBoolean = false;
   User? _selectedFriend;
 
-  FriendListProvider() {
-    firebaseService = FirebaseFriendAPI();
+  RequestListProvider() {
+    firebaseService = FirebaseRequestAPI();
     fetchFriends();
   }
 
@@ -35,32 +35,21 @@ class FriendListProvider with ChangeNotifier {
     _selectedFriend = item;
   }
 
-  changeSearchString(String username) {
-    searchString = username;
-    notifyListeners();
-  }
-
-  changeSearchBool(bool value) {
-    searchBoolean = value;
-    notifyListeners();
-  }
-
   void fetchFriends() {
-    // _friendList = friendAPI.fetchFriends();
     _friendsStream = firebaseService.getAllFriends();
     notifyListeners();
   }
 
-  void sendRequest() async {
+  void acceptRequest() async {
     String message =
-        await firebaseService.sendRequest(userID, _selectedFriend!.id);
+        await firebaseService.acceptRequest(userID, _selectedFriend!.id);
     print(message);
     notifyListeners();
   }
 
-  void unfriend() async {
+  void rejectRequest() async {
     String message =
-        await firebaseService.unfriend(userID, _selectedFriend!.id);
+        await firebaseService.rejectRequest(userID, _selectedFriend!.id);
     print(message);
     notifyListeners();
   }

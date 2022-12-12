@@ -21,7 +21,7 @@ class FriendPage extends StatefulWidget {
 }
 
 class _FriendPageState extends State<FriendPage> {
-  static const String userID = "sampleid1";
+  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
   // var searchString = "";
   // bool _searchBoolean = false;
 
@@ -31,220 +31,145 @@ class _FriendPageState extends State<FriendPage> {
     Stream<QuerySnapshot> friendsStream =
         context.watch<FriendListProvider>().friends;
 
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: !_searchBoolean ? const Text("Friends") : _searchTextField(),
-    //     actions: !_searchBoolean
-    //         ? [
-    //             IconButton(
-    //                 icon: const Icon(Icons.search),
-    //                 onPressed: () {
-    //                   setState(() {
-    //                     _searchBoolean = true;
-    //                   });
-    //                 })
-    //           ]
-    //         : [
-    //             IconButton(
-    //                 icon: const Icon(Icons.clear),
-    //                 onPressed: () {
-    //                   setState(() {
-    //                     _searchBoolean = false;
-    //                   });
-    //                 })
-    //           ],
-    //   ),
-    return Stack(children: [
-      StreamBuilder(
-        stream: friendsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("Error encountered! ${snapshot.error}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (!snapshot.hasData) {
-            return const Center(
-              child: Text("No Friends Found"),
-            );
-          } else if (context.watch<FriendListProvider>().searchBool) {
-            return ListView.builder(
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (context, index) {
-                  String friendID = snapshot.data!.docs[index].id;
-                  User friend = User.fromJson(snapshot.data?.docs[index].data()
-                      as Map<String, dynamic>);
+    return StreamBuilder(
+      stream: friendsStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text("Error encountered! ${snapshot.error}"),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (!snapshot.hasData) {
+          return const Center(
+            child: Text("No Friends Found"),
+          );
+        } else if (context.watch<FriendListProvider>().searchBool) {
+          return ListView.builder(
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (context, index) {
+                String friendID = snapshot.data!.docs[index].id;
+                User friend = User.fromJson(
+                    snapshot.data?.docs[index].data() as Map<String, dynamic>);
 
-                  if (context.watch<FriendListProvider>().searchText.isEmpty) {
-                    return Container();
-                  }
-
-                  if (friend.userName.toString().startsWith(
-                      context.watch<FriendListProvider>().searchText)) {
-                    return ListTile(
-                      key: Key(index.toString()),
-                      title: Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(friend.firstName),
-                      ),
-                      subtitle: Text("@${friend.userName}"),
-                      leading: Initicon(
-                        text: friend.firstName,
-                        size: 40,
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              context
-                                  .read<FriendListProvider>()
-                                  .changeSelectedFriend(friendID, friend);
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => FriendModal(
-                                  type: 'Send',
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.person_add_alt_outlined),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              context
-                                  .read<FriendListProvider>()
-                                  .changeSelectedFriend(friendID, friend);
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => FriendModal(
-                                  type: 'Unfriend',
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.delete_outline),
-                          )
-                        ],
-                      ),
-                      onTap: () {},
-                    );
-                  }
-
+                if (context.watch<FriendListProvider>().searchText.isEmpty) {
                   return Container();
-                });
-          } else {
-            var userFriends = snapshot.data?.docs
-                .firstWhere((doc) => doc.id == userID)["friends"];
-            return ListView.builder(
-              itemCount: userFriends.length,
-              itemBuilder: ((context, index) {
-                String friendID = userFriends[index];
-                User friend = User.fromJson(snapshot.data?.docs
-                    .firstWhere((doc) => doc.id == friendID)
-                    .data() as Map<String, dynamic>);
-                return ListTile(
-                  key: Key(index.toString()),
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(friend.firstName),
-                  ),
-                  subtitle: Text("@${friend.userName}"),
-                  leading: Initicon(
-                    text: friend.firstName,
-                    size: 40,
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          context
-                              .read<FriendListProvider>()
-                              .changeSelectedFriend(friendID, friend);
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => FriendModal(
-                              type: 'Send',
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.person_add_alt_outlined),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context
-                              .read<FriendListProvider>()
-                              .changeSelectedFriend(friendID, friend);
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => FriendModal(
-                              type: 'Unfriend',
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.delete_outline),
-                      )
-                    ],
-                  ),
-                  onTap: () {},
-                );
-              }),
-            );
-          }
-        },
-      ),
-      Positioned(
-        right: 10,
-        bottom: 10,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, '/');
-          },
-          label: const Text('Friends'),
-          icon: const Icon(Icons.supervisor_account_outlined),
-        ),
-        // child: Icon(Icons.add),
-        // backgroundColor: Colors.red,
-      ),
-    ]);
-    // floatingActionButton: FloatingActionButton.extended(
-    //   onPressed: () {
-    //     Navigator.pop(context);
-    //     Navigator.pushNamed(context, '/');
-    //   },
-    //   label: const Text('Friends'),
-    //   icon: const Icon(Icons.supervisor_account_outlined),
-    // ),
-  }
+                }
 
-  // Widget _searchTextField() {
-  //   return TextField(
-  //     onChanged: (value) {
-  //       setState(() {
-  //         searchString = value;
-  //       });
-  //     },
-  //     autofocus: true,
-  //     cursorColor: Colors.white,
-  //     style: const TextStyle(
-  //       color: Colors.white,
-  //       fontSize: 20,
-  //     ),
-  //     textInputAction: TextInputAction.search,
-  //     decoration: const InputDecoration(
-  //       enabledBorder:
-  //           UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-  //       focusedBorder:
-  //           UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-  //       hintText: "Search by display name",
-  //       hintStyle: TextStyle(
-  //         color: Colors.white60,
-  //         fontSize: 20,
-  //       ),
-  //     ),
-  //   );
-  // }
+                if (friend.userName.toString().startsWith(
+                    context.watch<FriendListProvider>().searchText)) {
+                  return ListTile(
+                    key: Key(index.toString()),
+                    title: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(friend.firstName + " " + friend.lastName),
+                    ),
+                    subtitle: Text("@${friend.userName}"),
+                    leading: Initicon(
+                      text: friend.firstName + " " + friend.lastName,
+                      size: 40,
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context
+                                .read<FriendListProvider>()
+                                .changeSelectedFriend(friendID, friend);
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => FriendModal(
+                                type: 'Send',
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.person_add_alt_outlined),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            context
+                                .read<FriendListProvider>()
+                                .changeSelectedFriend(friendID, friend);
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => FriendModal(
+                                type: 'Unfriend',
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.delete_outline),
+                        )
+                      ],
+                    ),
+                    onTap: () {},
+                  );
+                }
+
+                return Container();
+              });
+        } else {
+          var userFriends = snapshot.data?.docs
+              .firstWhere((doc) => doc.id == userID)["friends"];
+          return ListView.builder(
+            itemCount: userFriends.length,
+            itemBuilder: ((context, index) {
+              String friendID = userFriends[index];
+              User friend = User.fromJson(snapshot.data?.docs
+                  .firstWhere((doc) => doc.id == friendID)
+                  .data() as Map<String, dynamic>);
+              return ListTile(
+                key: Key(index.toString()),
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: Text(friend.firstName + " " + friend.lastName),
+                ),
+                subtitle: Text("@${friend.userName}"),
+                leading: Initicon(
+                  text: friend.firstName + " " + friend.lastName,
+                  size: 40,
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        context
+                            .read<FriendListProvider>()
+                            .changeSelectedFriend(friendID, friend);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => FriendModal(
+                            type: 'Send',
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.person_add_alt_outlined),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        context
+                            .read<FriendListProvider>()
+                            .changeSelectedFriend(friendID, friend);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => FriendModal(
+                            type: 'Unfriend',
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.delete_outline),
+                    )
+                  ],
+                ),
+                onTap: () {},
+              );
+            }),
+          );
+        }
+      },
+    );
+  }
 }
