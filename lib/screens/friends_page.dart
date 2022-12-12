@@ -60,51 +60,53 @@ class _FriendPageState extends State<FriendPage> {
 
                 if (friend.userName.toString().startsWith(
                     context.watch<FriendListProvider>().searchText)) {
-                  return ListTile(
-                    key: Key(index.toString()),
-                    title: Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(friend.firstName + " " + friend.lastName),
+                  return Card(
+                    child: ListTile(
+                      key: Key(index.toString()),
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Text(friend.firstName + " " + friend.lastName),
+                      ),
+                      subtitle: Text("@${friend.userName}"),
+                      leading: Initicon(
+                        text: friend.firstName + " " + friend.lastName,
+                        size: 40,
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<FriendListProvider>()
+                                  .changeSelectedFriend(friendID, friend);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => FriendModal(
+                                  type: 'Send',
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.person_add_alt_outlined),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<FriendListProvider>()
+                                  .changeSelectedFriend(friendID, friend);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => FriendModal(
+                                  type: 'Unfriend',
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.delete_outline),
+                          )
+                        ],
+                      ),
+                      onTap: () {},
                     ),
-                    subtitle: Text("@${friend.userName}"),
-                    leading: Initicon(
-                      text: friend.firstName + " " + friend.lastName,
-                      size: 40,
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            context
-                                .read<FriendListProvider>()
-                                .changeSelectedFriend(friendID, friend);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => FriendModal(
-                                type: 'Send',
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.person_add_alt_outlined),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            context
-                                .read<FriendListProvider>()
-                                .changeSelectedFriend(friendID, friend);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => FriendModal(
-                                type: 'Unfriend',
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.delete_outline),
-                        )
-                      ],
-                    ),
-                    onTap: () {},
                   );
                 }
 
@@ -120,51 +122,53 @@ class _FriendPageState extends State<FriendPage> {
               User friend = User.fromJson(snapshot.data?.docs
                   .firstWhere((doc) => doc.id == friendID)
                   .data() as Map<String, dynamic>);
-              return ListTile(
-                key: Key(index.toString()),
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0),
-                  child: Text(friend.firstName + " " + friend.lastName),
+              return Card(
+                child: ListTile(
+                  key: Key(index.toString()),
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: Text(friend.firstName + " " + friend.lastName),
+                  ),
+                  subtitle: Text("@${friend.userName}"),
+                  leading: Initicon(
+                    text: friend.firstName + " " + friend.lastName,
+                    size: 40,
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          context
+                              .read<FriendListProvider>()
+                              .changeSelectedFriend(friendID, friend);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => FriendModal(
+                              type: 'Send',
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.person_add_alt_outlined),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          context
+                              .read<FriendListProvider>()
+                              .changeSelectedFriend(friendID, friend);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => FriendModal(
+                              type: 'Unfriend',
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.delete_outline),
+                      )
+                    ],
+                  ),
+                  onTap: () {},
                 ),
-                subtitle: Text("@${friend.userName}"),
-                leading: Initicon(
-                  text: friend.firstName + " " + friend.lastName,
-                  size: 40,
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context
-                            .read<FriendListProvider>()
-                            .changeSelectedFriend(friendID, friend);
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => FriendModal(
-                            type: 'Send',
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.person_add_alt_outlined),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context
-                            .read<FriendListProvider>()
-                            .changeSelectedFriend(friendID, friend);
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => FriendModal(
-                            type: 'Unfriend',
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.delete_outline),
-                    )
-                  ],
-                ),
-                onTap: () {},
               );
             }),
           );

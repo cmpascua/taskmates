@@ -71,58 +71,62 @@ class _TodoPageState extends State<TodoPage> {
                     color: Colors.red,
                     child: const Icon(Icons.delete),
                   ),
-                  child: ListTile(
-                    title: Text(todo.title),
-                    onTap: () {
-                      context.read<TodoListProvider>().changeSelectedTodo(todo);
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => TodoModal(
-                          type: 'Edit',
-                        ),
-                      );
-                    },
-                    leading: Checkbox(
-                      value: todo.completed,
-                      onChanged: (bool? value) {
+                  child: Card(
+                    child: ListTile(
+                      title: Text(todo.title),
+                      onTap: () {
                         context
                             .read<TodoListProvider>()
                             .changeSelectedTodo(todo);
-                        context.read<TodoListProvider>().toggleStatus(value!);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => TodoModal(
+                            type: 'Edit',
+                          ),
+                        );
                       },
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            // context
-                            //     .read<TodoListProvider>()
-                            //     .changeSelectedTodo(todo);
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (BuildContext context) => TodoModal(
-                            //     type: 'Share',
-                            //   ),
-                            // );
-                          },
-                          icon: const Icon(Icons.share),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            context
-                                .read<TodoListProvider>()
-                                .changeSelectedTodo(todo);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => TodoModal(
-                                type: 'Delete',
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.delete_outlined),
-                        )
-                      ],
+                      leading: Checkbox(
+                        value: todo.completed,
+                        onChanged: (bool? value) {
+                          context
+                              .read<TodoListProvider>()
+                              .changeSelectedTodo(todo);
+                          context.read<TodoListProvider>().toggleStatus(value!);
+                        },
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              // context
+                              //     .read<TodoListProvider>()
+                              //     .changeSelectedTodo(todo);
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (BuildContext context) => TodoModal(
+                              //     type: 'Share',
+                              //   ),
+                              // );
+                            },
+                            icon: const Icon(Icons.share),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<TodoListProvider>()
+                                  .changeSelectedTodo(todo);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => TodoModal(
+                                  type: 'Delete',
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.delete_outlined),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
