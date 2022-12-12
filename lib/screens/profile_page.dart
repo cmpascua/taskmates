@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:week7_networking_discussion/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:week7_networking_discussion/providers/requests_provider.dart';
+import 'package:week7_networking_discussion/screens/modal_users.dart';
 import 'package:week7_networking_discussion/screens/requests_page.dart';
 import '../models/users_model.dart';
-// import '../providers/friends_provider.dart';
 import '../providers/requests_provider.dart';
 import 'modal_friends.dart';
 
@@ -138,7 +139,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               ],
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              context
+                                  .read<FriendListProvider>()
+                                  .changeSelectedFriend(friendID, friend);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const UserModal(),
+                              );
+                            },
                           ),
                         );
                       }),

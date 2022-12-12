@@ -12,6 +12,7 @@ import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:week7_networking_discussion/screens/modal_friends.dart';
+import 'package:week7_networking_discussion/screens/modal_users.dart';
 
 class FriendPage extends StatefulWidget {
   const FriendPage({super.key});
@@ -105,7 +106,15 @@ class _FriendPageState extends State<FriendPage> {
                           )
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        context
+                            .read<FriendListProvider>()
+                            .changeSelectedFriend(friendID, friend);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => const UserModal(),
+                        );
+                      },
                     ),
                   );
                 }
@@ -167,7 +176,15 @@ class _FriendPageState extends State<FriendPage> {
                       )
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    context
+                        .read<FriendListProvider>()
+                        .changeSelectedFriend(friendID, friend);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => const UserModal(),
+                    );
+                  },
                 ),
               );
             }),
