@@ -60,7 +60,7 @@ class UserModal extends StatelessWidget {
         ),
         iconSize: 72,
       ),
-      Positioned(bottom: 0, right: 4, child: buildStarsIcon(Colors.lightBlue)),
+      Positioned(bottom: 0, right: 4, child: buildPersonIcon(Colors.lightBlue)),
     ]);
   }
 
@@ -119,16 +119,16 @@ class UserModal extends StatelessWidget {
         ),
       );
 
-  Widget buildStarsIcon(Color color) => buildCircle(
+  Widget buildPersonIcon(Color color) => buildCircle(
         color: Colors.white,
         all: 3,
         child: buildCircle(
           color: color,
-          all: 8,
+          all: 5,
           child: const Icon(
-            Icons.stars,
+            Icons.person_outline,
             color: Colors.white,
-            size: 20,
+            size: 15,
           ),
         ),
       );

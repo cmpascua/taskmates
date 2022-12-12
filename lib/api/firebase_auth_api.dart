@@ -28,7 +28,7 @@ class FirebaseAuthAPI {
   }
 
   String getUserID() {
-    return uid;
+    return auth.currentUser!.uid;
   }
 
   DocumentReference<Map<String, dynamic>> getUserDetails(String userID) {

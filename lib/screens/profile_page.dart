@@ -21,9 +21,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    // String userID = context.read<AuthProvider>().userID();
+    String userID = context.read<AuthProvider>().userID();
     // print(userID);
-    String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+    // String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
     Stream<QuerySnapshot> friendsStream =
         context.watch<RequestListProvider>().friends;
 
@@ -180,7 +180,7 @@ Widget buildAvatar() {
       ),
       iconSize: 96,
     ),
-    Positioned(bottom: 0, right: 4, child: buildStarsIcon(Colors.lightBlue)),
+    Positioned(bottom: 0, right: 4, child: buildOwnerIcon(Colors.lightBlue)),
   ]);
 }
 
@@ -212,96 +212,6 @@ Widget buildDetails() {
     ),
   );
 }
-
-// Widget buildRequests() {
-//   return Container(
-//     child: StreamBuilder(
-//         stream: friendsStream,
-//         builder: (context, snapshot) {
-//           if (snapshot.hasError) {
-//             return Center(
-//               child: Text("Error encountered! ${snapshot.error}"),
-//             );
-//           } else if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(
-//               child: CircularProgressIndicator(),
-//               // child: Text("Loading..."),
-//             );
-//           } else if (!snapshot.hasData) {
-//             return const Center(
-//               child: Text("No Friend Requests Found"),
-//             );
-//           }
-
-//           if (snapshot.data?.docs
-//               .firstWhere((doc) => doc.id == userID)["receivedFriendRequests"]
-//               .isEmpty) {
-//             var receivedRequests = snapshot.data?.docs.firstWhere(
-//                 (doc) => doc.id == userID)["receivedFriendRequests"];
-//             return ListView.builder(
-//               itemCount: receivedRequests.length,
-//               itemBuilder: ((context, index) {
-//                 String friendID = receivedRequests[index];
-//                 User friend = User.fromJson(snapshot.data?.docs
-//                     .firstWhere((doc) => doc.id == friendID)
-//                     .data() as Map<String, dynamic>);
-//                 return ListTile(
-//                   key: Key(friendID.toString()),
-//                   title: Padding(
-//                     padding: const EdgeInsets.only(bottom: 5.0),
-//                     child: Text("${friend.firstName} " " ${friend.lastName}"),
-//                   ),
-//                   subtitle: Text("@${friend.userName}"),
-//                   leading: Initicon(
-//                     text: "${friend.firstName} " " ${friend.lastName}",
-//                     size: 40,
-//                   ),
-//                   trailing: Row(
-//                     mainAxisSize: MainAxisSize.min,
-//                     children: [
-//                       IconButton(
-//                         onPressed: () {
-//                           context
-//                               .read<FriendListProvider>()
-//                               .changeSelectedFriend(friendID, friend);
-//                           showDialog(
-//                             context: context,
-//                             builder: (BuildContext context) => FriendModal(
-//                               type: 'Send',
-//                             ),
-//                           );
-//                         },
-//                         icon: const Icon(Icons.person_add_alt_outlined),
-//                       ),
-//                       IconButton(
-//                         onPressed: () {
-//                           context
-//                               .read<FriendListProvider>()
-//                               .changeSelectedFriend(friendID, friend);
-//                           showDialog(
-//                             context: context,
-//                             builder: (BuildContext context) => FriendModal(
-//                               type: 'Unfriend',
-//                             ),
-//                           );
-//                         },
-//                         icon: const Icon(Icons.delete_outline),
-//                       )
-//                     ],
-//                   ),
-//                   onTap: () {},
-//                 );
-//               }),
-//             );
-//           } else {
-//             return const Center(
-//               child: Text("No Friend Requests Found"),
-//             );
-//           }
-//         },
-//       ),
-//   )
-// }
 
 Widget buildUserDetails(BuildContext context) {
   return Row(
@@ -342,16 +252,16 @@ Widget buildButton(BuildContext context, String value, String text) =>
       ),
     );
 
-Widget buildStarsIcon(Color color) => buildCircle(
+Widget buildOwnerIcon(Color color) => buildCircle(
       color: Colors.white,
       all: 3,
       child: buildCircle(
         color: color,
-        all: 8,
+        all: 6,
         child: const Icon(
-          Icons.stars,
+          Icons.verified_user,
           color: Colors.white,
-          size: 20,
+          size: 18,
         ),
       ),
     );
