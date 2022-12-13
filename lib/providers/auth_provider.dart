@@ -33,13 +33,11 @@ class AuthProvider with ChangeNotifier {
 
   User? get user => userObj;
 
+  AppUser get loggedUser => owner;
+
   String userID() {
     return authService.getUserID();
   }
-
-  // void updateOwnerData(String key, String details) {
-  //   ownerDetails.update(key, (value) => details);
-  // }
 
   void saveOwnerData() {
     final futureOwner = authService.getUserData();
@@ -55,40 +53,6 @@ class AuthProvider with ChangeNotifier {
     });
     print("Saved owner details!");
   }
-
-  // void getOwnerData() {
-  //   final futureOwner = authService.getUserData();
-  //   futureOwner.then((data) {
-  //     // print(data.userName);
-  //     updateOwnerData("userName", data.userName);
-  //     owner.userName = data.userName;
-  //     owner.firstName = data.firstName;
-  //     owner.lastName = data.lastName;
-  //     owner.birthday = data.birthday;
-  //     owner.location = data.location;
-  //     owner.email = data.email;
-  //     // print(ownerDetails["userName"]);
-  //     print(owner.location);
-  //   }, onError: (e) {
-  //     print(e);
-  //   });
-  //   print("Saved owner!");
-  // }
-
-  // Map<String, dynamic>? getOwnerData(String field) {
-  //   final futureOwner = authService.getUserData();
-  //   futureOwner.then((data) {
-  //     print("Owner data...");
-  //     return data?.containsKey(field);
-  //   }, onError: (e) {
-  //     print(e);
-  //   });
-  //   return null;
-  // }
-
-  // Future<AppUser?> userDetails() {
-  //   return authService.getUserDetails();
-  // }
 
   bool get isAuthenticated {
     return user != null;

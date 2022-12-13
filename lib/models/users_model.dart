@@ -32,32 +32,6 @@ class AppUser {
     this.sentFriendRequests,
   });
 
-  AppUser copy({
-    String? id,
-    required final String userName,
-    required String firstName,
-    required String lastName,
-    required String birthday,
-    required String location,
-    required String email,
-    List<dynamic>? friends,
-    List<dynamic>? receivedFriendRequests,
-    List<dynamic>? sentFriendRequests,
-  }) =>
-      AppUser(
-        id: id ?? this.id,
-        userName: userName ?? this.userName,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        birthday: birthday ?? this.birthday,
-        location: location ?? this.location,
-        email: email ?? this.email,
-        friends: friends ?? this.friends,
-        receivedFriendRequests:
-            receivedFriendRequests ?? this.receivedFriendRequests,
-        sentFriendRequests: sentFriendRequests ?? sentFriendRequests,
-      );
-
   // Factory constructor to instantiate object from json format
   factory AppUser.fromJson(Map<String, dynamic> json) {
     return AppUser(

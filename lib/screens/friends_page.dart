@@ -11,8 +11,8 @@ import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
-import 'package:week7_networking_discussion/screens/modal_friends.dart';
-import 'package:week7_networking_discussion/screens/modal_users.dart';
+import 'package:week7_networking_discussion/screens/friends_modal.dart';
+import 'package:week7_networking_discussion/screens/users_modal.dart';
 
 class FriendPage extends StatefulWidget {
   const FriendPage({super.key});

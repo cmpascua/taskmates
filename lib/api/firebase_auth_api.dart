@@ -15,12 +15,6 @@ class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   late String uid = "";
-  // late User userData;
-
-  void saveUserID() {
-    final User? user = auth.currentUser;
-    uid = user!.uid;
-  }
 
   Future<AppUser> getUserData() async {
     final docUser = db.collection("users").doc(auth.currentUser!.uid);
@@ -29,59 +23,20 @@ class FirebaseAuthAPI {
     return AppUser.fromJson(snapshot.data()!);
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getLoggedUser() {
-    return db.collection("users").doc(uid).snapshots();
-  }
-
-  // retrieveUserName() async {
-  //   // enter here the path , from where you want to fetch the doc
-  //   DocumentSnapshot pathData = await db.collection("users").doc(uid).get();
-
-  //   if (pathData.exists) {
-  //     Map<String, dynamic>? fetchDoc = pathData.data() as Map<String, dynamic>?;
-
-  //     //Now use fetchDoc?['KEY_names'], to access the data from firestore, to perform operations , for eg
-  //     return fetchDoc?["userName"];
-
-  //     // setState(() {});  // use only if needed
-  //   }
-  // }
-
-  // Future<Map<String, dynamic>?> getUserData() async {
-  //   final docUser = db.collection("users").doc(uid);
-  //   final snapshot = await docUser.get();
-
-  //   return snapshot.data();
-  // }
-
   Stream<User?> getUser() {
     return auth.authStateChanges();
   }
 
   String getUserID() {
     return auth.currentUser!.uid;
-    // return uid;
   }
-
-  // Future<AppUser?> getUserDetails() async {
-  //   String userID = auth.currentUser!.uid;
-  //   final docUser = db.collection("users").doc(userID);
-  //   final snapshot = await docUser.get();
-  //   // DocumentSnapshot userData = await db.collection("users").doc(userID).get();
-
-  //   if (snapshot.exists) {
-  //     return AppUser.fromJson(snapshot.data()!);
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   void signIn(String email, String password) async {
     UserCredential credential;
     try {
       final credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      saveUserID();
+      uid = auth.currentUser!.uid;
     } on FirebaseAuthException catch (e) {
       Errorbar.showSnackBar(e.message);
     }

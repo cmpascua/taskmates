@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/models/todo_model.dart';
 import 'package:week7_networking_discussion/providers/todo_provider.dart';
 import 'package:week7_networking_discussion/providers/auth_provider.dart';
-import 'package:week7_networking_discussion/screens/modal_todo.dart';
+import 'package:week7_networking_discussion/screens/todo_modal.dart';
 import 'package:week7_networking_discussion/screens/friends_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

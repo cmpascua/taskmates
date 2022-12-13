@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
@@ -5,11 +7,11 @@ import 'package:week7_networking_discussion/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:week7_networking_discussion/providers/requests_provider.dart';
-import 'package:week7_networking_discussion/screens/modal_users.dart';
+import 'package:week7_networking_discussion/screens/users_modal.dart';
 import 'package:week7_networking_discussion/screens/requests_page.dart';
 import '../models/users_model.dart';
 import '../providers/requests_provider.dart';
-import 'modal_friends.dart';
+import 'friends_modal.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,34 +24,23 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     String userID = context.read<AuthProvider>().userID();
+    AppUser loggedUser = context.read<AuthProvider>().loggedUser;
     Stream<QuerySnapshot> friendsStream =
         context.watch<RequestListProvider>().friends;
-    // AsyncSnapshot snapshot = friendsStream as AsyncSnapshot;
-    // AppUser owner = AppUser.fromJson(snapshot.data?.docs
-    //     .firstWhere((doc) => doc.id == userID)
-    //     .data() as Map<String, dynamic>);
-
-    // AppUser owner =
-    //     AppUser.fromJson(context.read<AuthProvider>().userDetails());
-
-    // final owner = context.read<AuthProvider>().userDetails();
-
-    //  Map<String, dynamic>? fetchDoc = owner.
-
-    // return buildAvatar();
     return ListView(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 32.0),
-            buildAvatar(),
+            buildAvatar(loggedUser.firstName + " " + loggedUser.lastName),
             const SizedBox(
               height: 12,
             ),
-            buildName(),
+            buildName(loggedUser.firstName + " " + loggedUser.lastName,
+                loggedUser.email),
             const SizedBox(height: 32.0),
-            buildUserDetails(context),
+            buildUserDetails(context, loggedUser.birthday, loggedUser.location),
             const SizedBox(height: 32.0),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -58,15 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
               onPressed: () {
-                // context.read<AuthProvider>().signOut();
-                // print(owner.data())
-                // owner.get().then((snapshot) {
-                //   print(snapshot);
-                // });
-                // print(owner);
-                // print(context.read<AuthProvider>().getOwnerData());
-                // context.read<AuthProvider>().getOwnerData();
-                // print(context.read<AuthProvider>().getOwnerData("email"));
+                context.read<AuthProvider>().signOut();
               },
               child: const Text("Logout"),
             ),
@@ -93,10 +76,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text("No Friend Requests Found"),
                     );
                   } else {
-                    // if (snapshot.data?.docs
-                    //     .firstWhere(
-                    //         (doc) => doc.id == userID)["receivedFriendRequests"]
-                    //     .isEmpty) {
                     var receivedRequests = snapshot.data?.docs.firstWhere(
                         (doc) => doc.id == userID)["receivedFriendRequests"];
                     return ListView.builder(
@@ -187,12 +166,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Widget buildAvatar() {
+Widget buildAvatar(String fullName) {
   return Stack(children: [
     IconButton(
       onPressed: () {},
-      icon: const Initicon(
-        text: "User McUser",
+      icon: Initicon(
+        text: fullName,
         size: 96,
       ),
       iconSize: 96,
@@ -201,12 +180,11 @@ Widget buildAvatar() {
   ]);
 }
 
-Widget buildName() {
-  return Column(children: const [
-    Text("User McUser",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+Widget buildName(String fullName, String email) {
+  return Column(children: [
+    Text(fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
     Text(
-      "user@email.com",
+      email,
       style: TextStyle(color: Colors.grey),
     ),
   ]);
@@ -230,13 +208,14 @@ Widget buildDetails() {
   );
 }
 
-Widget buildUserDetails(BuildContext context) {
+Widget buildUserDetails(
+    BuildContext context, String birthday, String location) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
-      buildButton(context, "November 19", "Birthday"),
+      buildButton(context, birthday, "Birthday"),
       buildDivider(),
-      buildButton(context, "Quezon, City", "Location"),
+      buildButton(context, location, "Location"),
     ],
   );
 }
