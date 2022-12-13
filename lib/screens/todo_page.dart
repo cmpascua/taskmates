@@ -5,6 +5,7 @@
     Program description: A Flutter shared todo list app.
 */
 
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ import 'package:week7_networking_discussion/providers/auth_provider.dart';
 import 'package:week7_networking_discussion/screens/todo_modal.dart';
 import 'package:week7_networking_discussion/screens/friends_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/users_model.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -27,6 +29,18 @@ class _TodoPageState extends State<TodoPage> {
   Widget build(BuildContext context) {
     // access the list of todos in the provider
     Stream<QuerySnapshot> todosStream = context.watch<TodoListProvider>().todos;
+    String userID = context.read<AuthProvider>().userID();
+    AppUser loggedUser = context.read<AuthProvider>().loggedUser;
+    List<dynamic>? loggedUserFriends = loggedUser.friends;
+    loggedUserFriends!.add(userID);
+    // List<dynamic>? loggedUserFriends = ["sampleid1"];
+    // var regex =
+    //     RegExp("(?:${loggedUserFriends!.join('|')})", caseSensitive: false);
+    // print(regex.toString());
+    // Timer(const Duration(seconds: 3), () {
+    //   regex = RegExp("\\b(?:${loggedUserFriends!.join('|')})\\b",
+    //       caseSensitive: false);
+    // });
 
     return Stack(
       children: [
@@ -52,85 +66,93 @@ class _TodoPageState extends State<TodoPage> {
               itemBuilder: ((context, index) {
                 Todo todo = Todo.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>);
-                return Dismissible(
-                  key: Key(todo.id.toString()),
-                  onDismissed: (direction) {
-                    context.read<TodoListProvider>().changeSelectedTodo(todo);
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) => TodoModal(
-                    //     type: 'Delete',
-                    //   ),
-                    // );
-                    context.read<TodoListProvider>().deleteTodo();
+                // if (todo.ownerUN.toString().startsWith(regex))
+                if (loggedUserFriends!.any((element) {
+                  return todo.ownerID.toString().contains(element);
+                })) {
+                  return Dismissible(
+                    key: Key(todo.id.toString()),
+                    onDismissed: (direction) {
+                      context.read<TodoListProvider>().changeSelectedTodo(todo);
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (BuildContext context) => TodoModal(
+                      //     type: 'Delete',
+                      //   ),
+                      // );
+                      context.read<TodoListProvider>().deleteTodo();
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('${todo.title} dismissed')));
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    child: const Icon(Icons.delete),
-                  ),
-                  child: Card(
-                    child: ListTile(
-                      title: Text(todo.title),
-                      subtitle: Text("@${todo.ownerUN}"),
-                      onTap: () {
-                        context
-                            .read<TodoListProvider>()
-                            .changeSelectedTodo(todo);
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => TodoModal(
-                            type: 'Edit',
-                          ),
-                        );
-                      },
-                      leading: Checkbox(
-                        value: todo.completed,
-                        onChanged: (bool? value) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('${todo.title} dismissed')));
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      child: const Icon(Icons.delete),
+                    ),
+                    child: Card(
+                      child: ListTile(
+                        title: Text(todo.title),
+                        subtitle: Text("@${todo.ownerUN}"),
+                        onTap: () {
                           context
                               .read<TodoListProvider>()
                               .changeSelectedTodo(todo);
-                          context.read<TodoListProvider>().toggleStatus(value!);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => TodoModal(
+                              type: 'Edit',
+                            ),
+                          );
                         },
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              // context
-                              //     .read<TodoListProvider>()
-                              //     .changeSelectedTodo(todo);
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) => TodoModal(
-                              //     type: 'Share',
-                              //   ),
-                              // );
-                            },
-                            icon: const Icon(Icons.share),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              context
-                                  .read<TodoListProvider>()
-                                  .changeSelectedTodo(todo);
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => TodoModal(
-                                  type: 'Delete',
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.delete_outlined),
-                          )
-                        ],
+                        leading: Checkbox(
+                          value: todo.completed,
+                          onChanged: (bool? value) {
+                            context
+                                .read<TodoListProvider>()
+                                .changeSelectedTodo(todo);
+                            context
+                                .read<TodoListProvider>()
+                                .toggleStatus(value!);
+                          },
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                // context
+                                //     .read<TodoListProvider>()
+                                //     .changeSelectedTodo(todo);
+                                // showDialog(
+                                //   context: context,
+                                //   builder: (BuildContext context) => TodoModal(
+                                //     type: 'Share',
+                                //   ),
+                                // );
+                              },
+                              icon: const Icon(Icons.share),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                context
+                                    .read<TodoListProvider>()
+                                    .changeSelectedTodo(todo);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => TodoModal(
+                                    type: 'Delete',
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.delete_outlined),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
+                return Container();
               }),
             );
           },

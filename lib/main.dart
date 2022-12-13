@@ -5,6 +5,7 @@
     Program description: A Flutter shared todo list app.
 */
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/providers/friends_provider.dart';
@@ -69,6 +70,7 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (context.watch<AuthProvider>().isAuthenticated) {
+      context.read<AuthProvider>().saveOwnerData();
       return const HomePage();
     } else {
       return const LoginPage();

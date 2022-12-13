@@ -70,9 +70,10 @@ class AuthProvider with ChangeNotifier {
 
   void signIn(String email, String password) {
     authService.signIn(email, password);
-    Timer(const Duration(seconds: 3), () {
-      saveOwnerData();
-    });
+    // saveOwnerData();
+    // Timer(const Duration(seconds: 3), () {
+    //   saveOwnerData();
+    // });
   }
 
   void signOut() {
