@@ -6,10 +6,12 @@
 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../providers/auth_provider.dart';
 
 class FirebaseRequestAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
-  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+  // static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+  static String userID = AuthProvider().user!.uid;
 
   Stream<QuerySnapshot> getAllFriends() {
     return db.collection("users").snapshots();

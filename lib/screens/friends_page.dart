@@ -13,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:week7_networking_discussion/screens/friends_modal.dart';
 import 'package:week7_networking_discussion/screens/users_modal.dart';
+import '../providers/auth_provider.dart';
 
 class FriendPage extends StatefulWidget {
   const FriendPage({super.key});
@@ -22,13 +23,10 @@ class FriendPage extends StatefulWidget {
 }
 
 class _FriendPageState extends State<FriendPage> {
-  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
-  // var searchString = "";
-  // bool _searchBoolean = false;
-
   @override
   Widget build(BuildContext context) {
     // access the list of friends in the provider
+    String userID = context.read<AuthProvider>().userID();
     Stream<QuerySnapshot> friendsStream =
         context.watch<FriendListProvider>().friends;
 

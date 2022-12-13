@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../api/firebase_requests_api.dart';
+import 'auth_provider.dart';
 
 class RequestListProvider with ChangeNotifier {
   late FirebaseRequestAPI firebaseService;
   late Stream<QuerySnapshot> _friendsStream;
-  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+  static String userID = AuthProvider().user!.uid;
   var searchString = "";
   bool searchBoolean = false;
   AppUser? _selectedFriend;

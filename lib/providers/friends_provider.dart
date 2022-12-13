@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/api/firebase_friends_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:week7_networking_discussion/providers/auth_provider.dart';
 
 class FriendListProvider with ChangeNotifier {
   late FirebaseFriendAPI firebaseService;
   late Stream<QuerySnapshot> _friendsStream;
-  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+  static String userID = AuthProvider().user!.uid;
   var searchString = "";
   bool searchBoolean = false;
   AppUser? _selectedFriend;
@@ -23,8 +24,6 @@ class FriendListProvider with ChangeNotifier {
     fetchFriends();
   }
 
-  // getter
-  // Future<List<User>> get friend => _friendList;
   Stream<QuerySnapshot> get friends => _friendsStream;
   AppUser get selected => _selectedFriend!;
   String get searchText => searchString;
@@ -46,7 +45,6 @@ class FriendListProvider with ChangeNotifier {
   }
 
   void fetchFriends() {
-    // _friendList = friendAPI.fetchFriends();
     _friendsStream = firebaseService.getAllFriends();
     notifyListeners();
   }

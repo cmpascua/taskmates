@@ -74,6 +74,7 @@ class _TodoPageState extends State<TodoPage> {
                   child: Card(
                     child: ListTile(
                       title: Text(todo.title),
+                      subtitle: Text("@${todo.ownerUN}"),
                       onTap: () {
                         context
                             .read<TodoListProvider>()

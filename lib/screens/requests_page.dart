@@ -12,6 +12,7 @@ import 'package:week7_networking_discussion/providers/friends_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:week7_networking_discussion/screens/friends_modal.dart';
+import '../providers/auth_provider.dart';
 
 class RequestsPage extends StatefulWidget {
   const RequestsPage({super.key});
@@ -21,7 +22,8 @@ class RequestsPage extends StatefulWidget {
 }
 
 class _RequestsPageState extends State<RequestsPage> {
-  static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+  // static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
+  static String userID = AuthProvider().user!.uid;
   bool _searchBoolean = false;
 
   @override

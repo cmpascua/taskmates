@@ -25,8 +25,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // await UserPreferences.init();
-
   runApp(
     MultiProvider(
       providers: [
@@ -56,7 +54,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const AuthWrapper(),
-        '/requests': (context) => const RequestsPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

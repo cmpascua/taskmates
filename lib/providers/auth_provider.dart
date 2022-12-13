@@ -15,12 +15,16 @@ import 'package:week7_networking_discussion/models/users_model.dart';
 class AuthProvider with ChangeNotifier {
   late FirebaseAuthAPI authService;
   AppUser owner = AppUser(
-      userName: "",
-      firstName: "",
-      lastName: "",
-      birthday: "",
-      location: "",
-      email: "");
+    userName: "",
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    location: "",
+    email: "",
+    sentFriendRequests: [],
+    receivedFriendRequests: [],
+    friends: [],
+  );
   User? userObj;
 
   AuthProvider() {
@@ -32,11 +36,14 @@ class AuthProvider with ChangeNotifier {
   }
 
   User? get user => userObj;
-
   AppUser get loggedUser => owner;
 
   String userID() {
     return authService.getUserID();
+  }
+
+  String userName() {
+    return owner.userName;
   }
 
   void saveOwnerData() {
@@ -48,6 +55,9 @@ class AuthProvider with ChangeNotifier {
       owner.birthday = data.birthday;
       owner.location = data.location;
       owner.email = data.email;
+      owner.sentFriendRequests = data.sentFriendRequests;
+      owner.receivedFriendRequests = data.receivedFriendRequests;
+      owner.friends = data.friends;
     }, onError: (e) {
       print(e);
     });

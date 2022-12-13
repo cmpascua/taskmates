@@ -10,9 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/models/todo_model.dart';
 import 'package:week7_networking_discussion/providers/todo_provider.dart';
 
+import '../providers/auth_provider.dart';
+
 class TodoModal extends StatelessWidget {
   String type;
-  // int todoIndex;
   TextEditingController _formFieldController = TextEditingController();
 
   TodoModal({
@@ -38,7 +39,6 @@ class TodoModal extends StatelessWidget {
   Widget _buildContent(BuildContext context) {
     // Use context.read to get the last updated list of todos
     // List<Todo> todoItems = context.read<TodoListProvider>().todo;
-
     switch (type) {
       case 'Delete':
         {
@@ -68,7 +68,8 @@ class TodoModal extends StatelessWidget {
     }
   }
 
-  TextButton _dialogAction(BuildContext context) {
+  TextButton _dialogAction(
+      BuildContext context, String userID, String userName) {
     return TextButton(
       onPressed: () {
         switch (type) {
@@ -76,8 +77,9 @@ class TodoModal extends StatelessWidget {
             {
               // Instantiate a todo objeect to be inserted, default userID will be 1, the id will be the next id in the list
               Todo temp = Todo(
-                  userId: 1,
+                  ownerID: userID,
                   completed: false,
+                  ownerUN: userName,
                   title: _formFieldController.text);
 
               context.read<TodoListProvider>().addTodo(temp);
@@ -115,13 +117,16 @@ class TodoModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userName = context.read<AuthProvider>().userName();
+    String userID = context.read<AuthProvider>().userID();
+
     return AlertDialog(
       title: _buildTitle(),
       content: _buildContent(context),
 
       // Contains two buttons - add/edit/delete, and cancel
       actions: <Widget>[
-        _dialogAction(context),
+        _dialogAction(context, userID, userName),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
