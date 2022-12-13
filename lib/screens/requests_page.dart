@@ -82,7 +82,7 @@ class _RequestsPageState extends State<RequestsPage> {
               itemCount: receivedRequests.length,
               itemBuilder: ((context, index) {
                 String friendID = receivedRequests[index];
-                User friend = User.fromJson(snapshot.data?.docs
+                AppUser friend = AppUser.fromJson(snapshot.data?.docs
                     .firstWhere((doc) => doc.id == friendID)
                     .data() as Map<String, dynamic>);
                 return ListTile(

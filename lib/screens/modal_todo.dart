@@ -46,22 +46,29 @@ class TodoModal extends StatelessWidget {
             "Are you sure you want to delete '${context.read<TodoListProvider>().selected.title}'?",
           );
         }
-      // Edit and add will have input field in them
+      case 'Add':
+        {
+          return TextField(
+            controller: _formFieldController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: "Task name",
+            ),
+          );
+        }
+      // Edit will have input field in them
       default:
         return TextField(
           controller: _formFieldController,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             hintText: context.read<TodoListProvider>().selected.title,
-            // hintText: todoIndex != -1 ? todoItems[todoIndex].title : '',
           ),
         );
     }
   }
 
   TextButton _dialogAction(BuildContext context) {
-    // List<Todo> todoItems = context.read<TodoListProvider>().todo;
-
     return TextButton(
       onPressed: () {
         switch (type) {

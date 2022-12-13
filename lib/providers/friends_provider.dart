@@ -16,7 +16,7 @@ class FriendListProvider with ChangeNotifier {
   static const String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
   var searchString = "";
   bool searchBoolean = false;
-  User? _selectedFriend;
+  AppUser? _selectedFriend;
 
   FriendListProvider() {
     firebaseService = FirebaseFriendAPI();
@@ -26,11 +26,11 @@ class FriendListProvider with ChangeNotifier {
   // getter
   // Future<List<User>> get friend => _friendList;
   Stream<QuerySnapshot> get friends => _friendsStream;
-  User get selected => _selectedFriend!;
+  AppUser get selected => _selectedFriend!;
   String get searchText => searchString;
   bool get searchBool => searchBoolean;
 
-  changeSelectedFriend(String itemID, User item) {
+  changeSelectedFriend(String itemID, AppUser item) {
     item.id = itemID;
     _selectedFriend = item;
   }

@@ -52,7 +52,7 @@ class _FriendPageState extends State<FriendPage> {
               itemCount: snapshot.data?.docs.length,
               itemBuilder: (context, index) {
                 String friendID = snapshot.data!.docs[index].id;
-                User friend = User.fromJson(
+                AppUser friend = AppUser.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>);
 
                 if (context.watch<FriendListProvider>().searchText.isEmpty) {
@@ -128,7 +128,7 @@ class _FriendPageState extends State<FriendPage> {
             itemCount: userFriends.length,
             itemBuilder: ((context, index) {
               String friendID = userFriends[index];
-              User friend = User.fromJson(snapshot.data?.docs
+              AppUser friend = AppUser.fromJson(snapshot.data?.docs
                   .firstWhere((doc) => doc.id == friendID)
                   .data() as Map<String, dynamic>);
               return Card(

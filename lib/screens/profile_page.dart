@@ -22,10 +22,19 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     String userID = context.read<AuthProvider>().userID();
-    // print(userID);
-    // String userID = "6OlxYP36yzc9wrixOhYxKZi6aFx1";
     Stream<QuerySnapshot> friendsStream =
         context.watch<RequestListProvider>().friends;
+    // AsyncSnapshot snapshot = friendsStream as AsyncSnapshot;
+    // AppUser owner = AppUser.fromJson(snapshot.data?.docs
+    //     .firstWhere((doc) => doc.id == userID)
+    //     .data() as Map<String, dynamic>);
+
+    // AppUser owner =
+    //     AppUser.fromJson(context.read<AuthProvider>().userDetails());
+
+    // final owner = context.read<AuthProvider>().userDetails();
+
+    //  Map<String, dynamic>? fetchDoc = owner.
 
     // return buildAvatar();
     return ListView(
@@ -49,7 +58,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
               onPressed: () {
-                context.read<AuthProvider>().signOut();
+                // context.read<AuthProvider>().signOut();
+                // print(owner.data())
+                // owner.get().then((snapshot) {
+                //   print(snapshot);
+                // });
+                // print(owner);
+                // print(context.read<AuthProvider>().getOwnerData());
+                // context.read<AuthProvider>().getOwnerData();
+                // print(context.read<AuthProvider>().getOwnerData("email"));
               },
               child: const Text("Logout"),
             ),
@@ -88,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemCount: receivedRequests.length,
                       itemBuilder: ((context, index) {
                         String friendID = receivedRequests[index];
-                        User friend = User.fromJson(snapshot.data?.docs
+                        AppUser friend = AppUser.fromJson(snapshot.data?.docs
                             .firstWhere((doc) => doc.id == friendID)
                             .data() as Map<String, dynamic>);
                         return Card(

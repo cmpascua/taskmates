@@ -7,9 +7,9 @@
 
 import 'dart:convert';
 
-class User {
+class AppUser {
   String? id;
-  final String userName;
+  String userName;
   String firstName;
   String lastName;
   String birthday;
@@ -19,7 +19,7 @@ class User {
   List<dynamic>? receivedFriendRequests;
   List<dynamic>? sentFriendRequests;
 
-  User({
+  AppUser({
     this.id,
     required this.userName,
     required this.firstName,
@@ -32,7 +32,7 @@ class User {
     this.sentFriendRequests,
   });
 
-  User copy({
+  AppUser copy({
     String? id,
     required final String userName,
     required String firstName,
@@ -44,7 +44,7 @@ class User {
     List<dynamic>? receivedFriendRequests,
     List<dynamic>? sentFriendRequests,
   }) =>
-      User(
+      AppUser(
         id: id ?? this.id,
         userName: userName ?? this.userName,
         firstName: firstName ?? this.firstName,
@@ -59,8 +59,8 @@ class User {
       );
 
   // Factory constructor to instantiate object from json format
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory AppUser.fromJson(Map<String, dynamic> json) {
+    return AppUser(
       id: json['id'],
       userName: json['userName'],
       firstName: json['firstName'],
@@ -74,12 +74,12 @@ class User {
     );
   }
 
-  static List<User> fromJsonArray(String jsonData) {
+  static List<AppUser> fromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data.map<User>((dynamic d) => User.fromJson(d)).toList();
+    return data.map<AppUser>((dynamic d) => AppUser.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(User user) {
+  Map<String, dynamic> toJson(AppUser user) {
     return {
       'userName': user.userName,
       'firstName': user.firstName,

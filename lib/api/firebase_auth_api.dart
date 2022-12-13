@@ -8,20 +8,51 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/utils/errorbar.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   late String uid = "";
-  late User userData;
+  // late User userData;
 
-  void saveUserData() {
+  void saveUserID() {
     final User? user = auth.currentUser;
     uid = user!.uid;
-
-    // userData = User.fromJson(db.collection("users").doc(uid));
   }
+
+  Future<AppUser> getUserData() async {
+    final docUser = db.collection("users").doc(auth.currentUser!.uid);
+    final snapshot = await docUser.get();
+
+    return AppUser.fromJson(snapshot.data()!);
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getLoggedUser() {
+    return db.collection("users").doc(uid).snapshots();
+  }
+
+  // retrieveUserName() async {
+  //   // enter here the path , from where you want to fetch the doc
+  //   DocumentSnapshot pathData = await db.collection("users").doc(uid).get();
+
+  //   if (pathData.exists) {
+  //     Map<String, dynamic>? fetchDoc = pathData.data() as Map<String, dynamic>?;
+
+  //     //Now use fetchDoc?['KEY_names'], to access the data from firestore, to perform operations , for eg
+  //     return fetchDoc?["userName"];
+
+  //     // setState(() {});  // use only if needed
+  //   }
+  // }
+
+  // Future<Map<String, dynamic>?> getUserData() async {
+  //   final docUser = db.collection("users").doc(uid);
+  //   final snapshot = await docUser.get();
+
+  //   return snapshot.data();
+  // }
 
   Stream<User?> getUser() {
     return auth.authStateChanges();
@@ -29,18 +60,28 @@ class FirebaseAuthAPI {
 
   String getUserID() {
     return auth.currentUser!.uid;
+    // return uid;
   }
 
-  DocumentReference<Map<String, dynamic>> getUserDetails(String userID) {
-    return db.collection("users").doc(userID);
-  }
+  // Future<AppUser?> getUserDetails() async {
+  //   String userID = auth.currentUser!.uid;
+  //   final docUser = db.collection("users").doc(userID);
+  //   final snapshot = await docUser.get();
+  //   // DocumentSnapshot userData = await db.collection("users").doc(userID).get();
+
+  //   if (snapshot.exists) {
+  //     return AppUser.fromJson(snapshot.data()!);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   void signIn(String email, String password) async {
     UserCredential credential;
     try {
       final credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      saveUserData();
+      saveUserID();
     } on FirebaseAuthException catch (e) {
       Errorbar.showSnackBar(e.message);
     }
