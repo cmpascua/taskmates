@@ -11,9 +11,9 @@ Christian Jewel M. Pascua
 D-1L
 
 ## Screenshots
-<img src="[https://your-image-url.type](https://user-images.githubusercontent.com/64654366/207613501-92b0a614-b30f-4942-a929-40d406b5bebb.png)" height="50%">
-<img src="[https://your-image-url.type](https://user-images.githubusercontent.com/64654366/207613530-3e23c5a8-4ddc-4725-80b8-43b5ab7ba07c.png)" height="50%">
-<img src="[https://your-image-url.type](https://user-images.githubusercontent.com/64654366/207613544-f06f474b-ecb9-4f5a-be2d-58fa78d43e2a.png)" height="50%">
+<img src="[Screenshot_1671025514](https://user-images.githubusercontent.com/64654366/207613501-92b0a614-b30f-4942-a929-40d406b5bebb.png)" height="50%">
+<img src="[Screenshot_1671025546](https://user-images.githubusercontent.com/64654366/207613530-3e23c5a8-4ddc-4725-80b8-43b5ab7ba07c.png)" height="50%">
+<img src="[Screenshot_1671025566](https://user-images.githubusercontent.com/64654366/207613544-f06f474b-ecb9-4f5a-be2d-58fa78d43e2a.png)" height="50%">
 <img src="[https://your-image-url.type](https://user-images.githubusercontent.com/64654366/207613559-7228cedb-95f0-4386-bfa1-cbb3d976cd45.png)" height="50%">
 <img src="[https://your-image-url.type](https://user-images.githubusercontent.com/64654366/207613582-9969ad13-17f2-4ad5-aa35-1e3fd27e3938.png)" height="50%">
 <img src="[https://your-image-url.type](https://user-images.githubusercontent.com/64654366/207613593-9cc92a64-fc65-4fe9-b123-05714dab3805.png)" height="50%">
