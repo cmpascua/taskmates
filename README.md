@@ -37,3 +37,4 @@ https://stackoverflow.com/questions/69558902/check-if-a-text-contains-at-least-o
 https://stackoverflow.com/questions/71521564/chromeproxyservice-failed-to-evaluate-expression-handleprimarypointerinterna  
 https://stackoverflow.com/questions/55170087/flutter-issue-type-timestamp-is-not-a-subtype-of-type-datetime  
 https://stackoverflow.com/questions/52716906/how-to-constrain-height-of-alertdialog  
+https://www.geeksforgeeks.org/flutter-schedule-local-notification-using-timezone  
