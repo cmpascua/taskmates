@@ -64,7 +64,9 @@ class _FriendPageState extends State<FriendPage> {
                       key: Key(index.toString()),
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(friend.firstName + " " + friend.lastName),
+                        child: Text(friend.firstName + " " + friend.lastName,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       subtitle: Text("@${friend.userName}"),
                       leading: Initicon(
@@ -134,7 +136,8 @@ class _FriendPageState extends State<FriendPage> {
                   key: Key(index.toString()),
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(friend.firstName + " " + friend.lastName),
+                    child: Text(friend.firstName + " " + friend.lastName,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   subtitle: Text("@${friend.userName}"),
                   leading: Initicon(

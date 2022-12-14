@@ -93,7 +93,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             title: Padding(
                               padding: const EdgeInsets.only(bottom: 5.0),
                               child: Text(
-                                  friend.firstName + " " + friend.lastName),
+                                  friend.firstName + " " + friend.lastName,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
                             ),
                             subtitle: Text("@${friend.userName}"),
                             leading: Initicon(
@@ -150,11 +152,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       }),
                     );
                   }
-                  // else {
-                  //   return const Center(
-                  //     child: Text("No Friend Requests Found"),
-                  //   );
-                  // }
                 },
               ),
             ),

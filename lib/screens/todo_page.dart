@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import '../models/todo_model.dart';
 import '../providers/todo_provider.dart';
@@ -91,7 +92,9 @@ class _TodoPageState extends State<TodoPage> {
                     ),
                     child: Card(
                       child: ListTile(
-                        title: Text(todo.title),
+                        title: Text(todo.title,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                         subtitle: Text("@${todo.ownerUN}"),
                         onTap: () {
                           context
@@ -118,20 +121,6 @@ class _TodoPageState extends State<TodoPage> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              onPressed: () {
-                                // context
-                                //     .read<TodoListProvider>()
-                                //     .changeSelectedTodo(todo);
-                                // showDialog(
-                                //   context: context,
-                                //   builder: (BuildContext context) => TodoModal(
-                                //     type: 'Share',
-                                //   ),
-                                // );
-                              },
-                              icon: const Icon(Icons.share),
-                            ),
                             IconButton(
                               onPressed: () {
                                 context

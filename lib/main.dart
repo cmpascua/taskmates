@@ -7,7 +7,9 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import '../notification_service.dart';
 import '../providers/friends_provider.dart';
 import '../providers/requests_provider.dart';
 import '../providers/todo_provider.dart';
@@ -19,9 +21,12 @@ import '../screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../utils/errorbar.dart';
 import 'firebase_options.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -41,8 +46,20 @@ void main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Asia/Manila'));
+  }
 
   // This widget is the root of your application.
   @override

@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:date_field/date_field.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:week7_networking_discussion/screens/todo_page.dart';
 import '../models/todo_model.dart';
 import '../providers/todo_provider.dart';
-
 import '../providers/auth_provider.dart';
 
 class TodoModal extends StatelessWidget {
@@ -53,6 +54,7 @@ class TodoModal extends StatelessWidget {
       case 'Add':
         {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _titleFieldController,
@@ -87,7 +89,7 @@ class TodoModal extends StatelessWidget {
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
-                maxLines: 10,
+                maxLines: 3,
                 controller: _descFieldController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -100,6 +102,7 @@ class TodoModal extends StatelessWidget {
       // Edit will have input field in them
       default:
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _titleFieldController,
@@ -138,7 +141,7 @@ class TodoModal extends StatelessWidget {
             ),
             TextField(
               keyboardType: TextInputType.multiline,
-              maxLines: 10,
+              maxLines: 3,
               controller: _descFieldController,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
@@ -153,7 +156,7 @@ class TodoModal extends StatelessWidget {
   TextButton _dialogAction(
       BuildContext context, String userID, String userName) {
     return TextButton(
-      onPressed: () {
+      onPressed: () async {
         switch (type) {
           case 'Add':
             {
@@ -187,7 +190,6 @@ class TodoModal extends StatelessWidget {
             {
               context.read<TodoListProvider>().deleteTodo();
 
-              // Remove dialog after editing
               Navigator.of(context).pop();
               break;
             }
