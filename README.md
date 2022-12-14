@@ -1,5 +1,5 @@
-# Exercise 07: Authentication and Testing
-A Flutter todo app with user login functionality.
+# TaskMates: A CMSC 23 Project
+A Flutter tasks app with sharing features.
 
 ### Name
 Christian Jewel M. Pascua
@@ -11,27 +11,29 @@ Christian Jewel M. Pascua
 D-1L
 
 ## Screenshots
-<img width="204" alt="image" src="https://user-images.githubusercontent.com/64654366/203043055-e802f429-391e-4d1e-8d06-71efa5e1a54e.png">
-<img width="204" alt="image" src="https://user-images.githubusercontent.com/64654366/203043110-64c03f6e-b783-4d9e-930d-f5e6e09cee3f.png">
-<img width="204" alt="image" src="https://user-images.githubusercontent.com/64654366/203043192-81b4bfd0-5ca8-4bdc-8864-75ece5b2baf0.png">
-<img width="204" alt="image" src="https://user-images.githubusercontent.com/64654366/203043227-54296082-f437-4957-b52d-0fab06e15c9d.png">
+<img src="https://user-images.githubusercontent.com/64654366/207613501-92b0a614-b30f-4942-a929-40d406b5bebb.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613530-3e23c5a8-4ddc-4725-80b8-43b5ab7ba07c.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613544-f06f474b-ecb9-4f5a-be2d-58fa78d43e2a.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613559-7228cedb-95f0-4386-bfa1-cbb3d976cd45.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613582-9969ad13-17f2-4ad5-aa35-1e3fd27e3938.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613593-9cc92a64-fc65-4fe9-b123-05714dab3805.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613611-1d212c2d-1493-42c3-a23f-0d99aa157a4c.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/64654366/207613624-1b824e6b-6f83-447c-9f38-199bc783f519.png" width="20%" height="20%">
 
 ## Things you did in the code
-I used the lab sample codes as a starter code for this exercise. I converted the textfields to textform fields and added input validation to them. In addition, I added first name and last name fields in the sign up page. I also added a feature to show firebase authentication errors in a snackbar.
+This project is an integration of all the laboratory exercises I completed for my mobile app programming course. I spent a lot of time and effort to make it fully-featured and user-friendly. The app lets users create and manage their own tasks, as well as view that of their friends. To create a task, users have to specify the title, description, and deadline. On the friends page, users can add friends which would enable them to view each other’s tasks. This allows users to plan and work together on projects and tasks even if they’re located in different places. In conclusion, this application can be really helpful for users who need to share and manage tasks with their friends and collaborators.
 
 ## Challenges faced
-I faced the most difficulty in creating automated tests for the app. I also spent some time fixing input validation in input fields. For some reason, the app is not detecting if the first name and last name fields are already filled. Fortunately, I was able to fix them eventually by using a simpler method of input validation.
+Implementing task notifications were difficult to set up as I lacked the time to gain familiarity with the feature's implementation. In addition, the friends feature was a challenging one as well due to the complexity of the data structure needed to view and store the relationships between the users. Moreover, I had to make sure that any changes made to the data were reflected for all users in real time. Overall, it was a challenging project but I'm happy with the results.
 
 ## Test Cases
 Happy paths:
   1. Once user launches the app, a login screen with an email field, password field, login button, and sign up button appears.
-  2. Once user taps the sign up button, the sign up screen appears with a first name field, last name field, email field, password field, sign up button, and a back button.
+  2. Once user taps the sign up button, the sign up screen appears with a first name field, last name field, username field, location field, birthday field, email field, password field, sign up button, and a back button.
 
 Unhappy paths:
-  1. The user taps the login button without entering any input to the email and password fields.
-  2. The user taps the sign up button without entering any input to the frist name, last name, email, and password fields.
+  1. The user taps the add friend button to a user that is already their friend.
+  2. The user taps the sign up button without entering any input to the required fields.
 
 ## References
-https://stackoverflow.com/questions/62248134/how-can-i-postion-the-text-in-bottom-left-in-the-drawer-header-and-reduce-the-dr
-https://firebase.google.com/docs/auth/web/password-auth
-https://www.youtube.com/watch?v=4vKiJZNPhss
+https://stackoverflow.com/questions/69141605/get-future-value-without-futurebuilder  
+https://stackoverflow.com/questions/67651539/how-can-i-retrieve-a-field-value-from-a-specific-document-in-firestore-using-flu  
+https://stackoverflow.com/questions/53517382/query-a-single-document-from-firestore-in-flutter-cloud-firestore-plugin  
+https://www.youtube.com/watch?v=G4INTsatBew  
+https://stackoverflow.com/questions/69558902/check-if-a-text-contains-at-least-one-string-from-a-list-of-strings-dart-flu  
+https://stackoverflow.com/questions/71521564/chromeproxyservice-failed-to-evaluate-expression-handleprimarypointerinterna  
+https://stackoverflow.com/questions/55170087/flutter-issue-type-timestamp-is-not-a-subtype-of-type-datetime  
+https://stackoverflow.com/questions/52716906/how-to-constrain-height-of-alertdialog  
