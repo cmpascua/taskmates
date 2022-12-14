@@ -8,9 +8,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/main.dart';
-import 'package:week7_networking_discussion/providers/auth_provider.dart';
-import 'package:week7_networking_discussion/screens/signup.dart';
+import '../main.dart';
+import '../providers/auth_provider.dart';
+import '../screens/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

@@ -7,11 +7,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/models/users_model.dart';
-import 'package:week7_networking_discussion/providers/friends_provider.dart';
+import '../models/users_model.dart';
+import '../providers/friends_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
-import 'package:week7_networking_discussion/screens/friends_modal.dart';
+import '../screens/friends_modal.dart';
 import '../providers/auth_provider.dart';
 
 class RequestsPage extends StatefulWidget {

@@ -8,7 +8,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/providers/auth_provider.dart';
+import '../providers/auth_provider.dart';
 import 'package:intl/intl.dart';
 
 class SignupPage extends StatefulWidget {

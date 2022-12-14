@@ -8,8 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/models/users_model.dart';
-import 'package:week7_networking_discussion/providers/friends_provider.dart';
+import '../models/users_model.dart';
+import '../providers/friends_provider.dart';
 
 class UserModal extends StatelessWidget {
   const UserModal({super.key});

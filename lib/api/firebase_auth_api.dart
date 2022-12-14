@@ -8,8 +8,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:week7_networking_discussion/models/users_model.dart';
-import 'package:week7_networking_discussion/utils/errorbar.dart';
+import '../models/users_model.dart';
+import '../utils/errorbar.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;

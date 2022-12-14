@@ -6,10 +6,10 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:week7_networking_discussion/models/users_model.dart';
-import 'package:week7_networking_discussion/api/firebase_friends_api.dart';
+import '../models/users_model.dart';
+import '../api/firebase_friends_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:week7_networking_discussion/providers/auth_provider.dart';
+import '../providers/auth_provider.dart';
 import '../api/firebase_auth_api.dart';
 
 class FriendListProvider with ChangeNotifier {

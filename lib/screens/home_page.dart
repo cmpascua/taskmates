@@ -8,13 +8,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/providers/auth_provider.dart';
-import 'package:week7_networking_discussion/screens/friends_appbar.dart';
-import 'package:week7_networking_discussion/screens/friends_page.dart';
-import 'package:week7_networking_discussion/screens/profile_appbar.dart';
-import 'package:week7_networking_discussion/screens/profile_page.dart';
-import 'package:week7_networking_discussion/screens/todo_appbar.dart';
-import 'package:week7_networking_discussion/screens/todo_page.dart';
+import '../providers/auth_provider.dart';
+import '../screens/friends_appbar.dart';
+import '../screens/friends_page.dart';
+import '../screens/profile_appbar.dart';
+import '../screens/profile_page.dart';
+import '../screens/todo_appbar.dart';
+import '../screens/todo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -8,16 +8,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/providers/friends_provider.dart';
-import 'package:week7_networking_discussion/providers/requests_provider.dart';
-import 'package:week7_networking_discussion/providers/todo_provider.dart';
-import 'package:week7_networking_discussion/providers/auth_provider.dart';
-import 'package:week7_networking_discussion/screens/home_page.dart';
-import 'package:week7_networking_discussion/screens/requests_page.dart';
-import 'package:week7_networking_discussion/screens/todo_page.dart';
-import 'package:week7_networking_discussion/screens/login.dart';
+import '../providers/friends_provider.dart';
+import '../providers/requests_provider.dart';
+import '../providers/todo_provider.dart';
+import '../providers/auth_provider.dart';
+import '../screens/home_page.dart';
+import '../screens/requests_page.dart';
+import '../screens/todo_page.dart';
+import '../screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:week7_networking_discussion/utils/errorbar.dart';
+import '../utils/errorbar.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       scaffoldMessengerKey: Errorbar.messengerKey,
       debugShowCheckedModeBanner: false,
-      title: "Do Your Bit",
+      title: "TaskMates",
       initialRoute: '/',
       routes: {
         '/': (context) => const AuthWrapper(),

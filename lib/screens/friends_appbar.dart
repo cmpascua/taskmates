@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:week7_networking_discussion/providers/friends_provider.dart';
+import '../providers/friends_provider.dart';
 
 class FriendsAppBar extends StatefulWidget {
   const FriendsAppBar({super.key});

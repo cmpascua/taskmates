@@ -1,4 +1,4 @@
-name: week7_networking_discussion
+name: taskmates
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -46,6 +46,7 @@ dependencies:
   flutter_local_notifications: ^12.0.4
   intl: ^0.17.0
   shared_preferences: ^2.0.15
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:

@@ -9,8 +9,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:week7_networking_discussion/api/firebase_auth_api.dart';
-import 'package:week7_networking_discussion/models/users_model.dart';
+import '../api/firebase_auth_api.dart';
+import '../models/users_model.dart';
 
 class AuthProvider with ChangeNotifier {
   late FirebaseAuthAPI authService;
