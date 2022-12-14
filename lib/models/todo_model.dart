@@ -12,6 +12,8 @@ class Todo {
   String? id;
   String ownerUN;
   String title;
+  String description;
+  DateTime deadline;
   bool completed;
 
   Todo({
@@ -19,6 +21,8 @@ class Todo {
     this.id,
     required this.ownerUN,
     required this.title,
+    required this.description,
+    required this.deadline,
     required this.completed,
   });
 
@@ -29,6 +33,8 @@ class Todo {
       id: json['id'],
       ownerUN: json['ownerUN'],
       title: json['title'],
+      description: json['description'],
+      deadline: json['deadline'].toDate(),
       completed: json['completed'],
     );
   }
@@ -43,6 +49,8 @@ class Todo {
       'ownerID': todo.ownerID,
       'ownerUN': todo.ownerUN,
       'title': todo.title,
+      'description': todo.description,
+      'deadline': todo.deadline,
       'completed': todo.completed,
     };
   }

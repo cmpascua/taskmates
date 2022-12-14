@@ -6,6 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:date_field/date_field.dart';
 import 'package:provider/provider.dart';
 import '../models/todo_model.dart';
 import '../providers/todo_provider.dart';
@@ -14,7 +16,9 @@ import '../providers/auth_provider.dart';
 
 class TodoModal extends StatelessWidget {
   String type;
-  TextEditingController _formFieldController = TextEditingController();
+  DateTime? dateTime;
+  TextEditingController _titleFieldController = TextEditingController();
+  TextEditingController _descFieldController = TextEditingController();
 
   TodoModal({
     super.key,
@@ -48,22 +52,100 @@ class TodoModal extends StatelessWidget {
         }
       case 'Add':
         {
-          return TextField(
-            controller: _formFieldController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Task name",
-            ),
+          return Column(
+            children: [
+              TextField(
+                controller: _titleFieldController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Title",
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              DateTimeFormField(
+                decoration: const InputDecoration(
+                  hintText: "Deadline",
+                  hintStyle: TextStyle(color: null),
+                  errorStyle: TextStyle(color: Colors.redAccent),
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.event_note),
+                ),
+                mode: DateTimeFieldPickerMode.dateAndTime,
+                initialDatePickerMode: DatePickerMode.day,
+                firstDate: DateTime.now(),
+                autovalidateMode: AutovalidateMode.always,
+                validator: (e) =>
+                    (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
+                onDateSelected: (DateTime value) {
+                  dateTime = value;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 10,
+                controller: _descFieldController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Description",
+                ),
+              ),
+            ],
           );
         }
       // Edit will have input field in them
       default:
-        return TextField(
-          controller: _formFieldController,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            hintText: context.read<TodoListProvider>().selected.title,
-          ),
+        return Column(
+          children: [
+            TextField(
+              controller: _titleFieldController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: context.read<TodoListProvider>().selected.title,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DateTimeFormField(
+              decoration: InputDecoration(
+                hintText: context
+                    .read<TodoListProvider>()
+                    .selected
+                    .deadline
+                    .toString(),
+                hintStyle: TextStyle(color: null),
+                errorStyle: TextStyle(color: Colors.redAccent),
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.event_note),
+              ),
+              mode: DateTimeFieldPickerMode.dateAndTime,
+              initialDatePickerMode: DatePickerMode.day,
+              firstDate: DateTime.now(),
+              autovalidateMode: AutovalidateMode.always,
+              validator: (e) =>
+                  (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
+              onDateSelected: (DateTime value) {
+                dateTime = value;
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: 10,
+              controller: _descFieldController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: context.read<TodoListProvider>().selected.description,
+              ),
+            ),
+          ],
         );
     }
   }
@@ -80,7 +162,9 @@ class TodoModal extends StatelessWidget {
                   ownerID: userID,
                   completed: false,
                   ownerUN: userName,
-                  title: _formFieldController.text);
+                  deadline: dateTime!,
+                  description: _descFieldController.text,
+                  title: _titleFieldController.text);
 
               context.read<TodoListProvider>().addTodo(temp);
 
@@ -90,9 +174,10 @@ class TodoModal extends StatelessWidget {
             }
           case 'Edit':
             {
-              context
-                  .read<TodoListProvider>()
-                  .editTodo(_formFieldController.text);
+              context.read<TodoListProvider>().editTodo(
+                  _titleFieldController.text,
+                  _descFieldController.text,
+                  dateTime!);
 
               // Remove dialog after editing
               Navigator.of(context).pop();
