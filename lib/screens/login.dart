@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final email = TextFormField(
+      key: const Key("emailFieldL"),
       decoration: const InputDecoration(
         icon: Icon(Icons.email),
         labelText: "Email",
@@ -43,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final password = TextFormField(
+      key: const Key("passwordFieldL"),
       obscureText: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: const InputDecoration(
@@ -63,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final loginButton = Padding(
+      key: const Key("loginButton"),
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () async {
@@ -79,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final signupButton = Padding(
+      key: const Key("signupButtonL"),
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: TextButton(
         style: TextButton.styleFrom(

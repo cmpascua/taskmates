@@ -7,23 +7,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:week7_networking_discussion/main.dart';
+import 'package:week7_networking_discussion/main.dart' as app;
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets("Happy path 1 test", (tester) async {
+    // Once user launches the app, a login screen with an email field, password field, login button, and sign up button appears.
+    app.main();
+    await tester.pumpAndSettle();
+    final screenDisplay = find.text("Login");
+    final userNameField = find.byKey(const Key("emailFieldL"));
+    final passwordField = find.byKey(const Key("passwordFieldL"));
+    final loginButton = find.byKey(const Key("loginButton"));
+    final signUpButton = find.byKey(const Key("signupButtonL"));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(screenDisplay, findsOneWidget);
+    expect(userNameField, findsOneWidget);
+    expect(passwordField, findsOneWidget);
+    expect(loginButton, findsOneWidget);
+    expect(signUpButton, findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.tap(signUpButton);
+    final signupDisplay = find.text("Sign Up");
+    expect(signupDisplay, findsOneWidget);
   });
 }
