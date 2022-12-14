@@ -67,7 +67,7 @@ class _TodoPageState extends State<TodoPage> {
                 Todo todo = Todo.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>);
                 // if (todo.ownerUN.toString().startsWith(regex))
-                if (loggedUserFriends!.any((element) {
+                if (loggedUserFriends.any((element) {
                   return todo.ownerID.toString().contains(element);
                 })) {
                   return Dismissible(

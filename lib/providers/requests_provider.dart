@@ -8,18 +8,22 @@
 import 'package:flutter/material.dart';
 import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../api/firebase_auth_api.dart';
 import '../api/firebase_requests_api.dart';
 import 'auth_provider.dart';
 
 class RequestListProvider with ChangeNotifier {
+  late FirebaseAuthAPI authService;
   late FirebaseRequestAPI firebaseService;
   late Stream<QuerySnapshot> _friendsStream;
-  static String userID = AuthProvider().user!.uid;
+  // static String userID = AuthProvider().user!.uid;
+  String userID = "";
   var searchString = "";
   bool searchBoolean = false;
   AppUser? _selectedFriend;
 
   RequestListProvider() {
+    authService = FirebaseAuthAPI();
     firebaseService = FirebaseRequestAPI();
     fetchFriends();
   }
@@ -30,6 +34,10 @@ class RequestListProvider with ChangeNotifier {
   AppUser get selected => _selectedFriend!;
   String get searchText => searchString;
   bool get searchBool => searchBoolean;
+
+  void saveUserID() {
+    userID = authService.getUserID();
+  }
 
   changeSelectedFriend(String itemID, AppUser item) {
     item.id = itemID;
@@ -42,6 +50,7 @@ class RequestListProvider with ChangeNotifier {
   }
 
   void acceptRequest() async {
+    saveUserID();
     String message =
         await firebaseService.acceptRequest(userID, _selectedFriend!.id);
     print(message);
@@ -49,6 +58,7 @@ class RequestListProvider with ChangeNotifier {
   }
 
   void rejectRequest() async {
+    saveUserID();
     String message =
         await firebaseService.rejectRequest(userID, _selectedFriend!.id);
     print(message);

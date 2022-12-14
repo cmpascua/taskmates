@@ -10,7 +10,7 @@ import '../providers/auth_provider.dart';
 
 class FirebaseFriendAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
-  static String userID = AuthProvider().user!.uid;
+  // static String userID = AuthProvider().user!.uid;
 
   Stream<QuerySnapshot> getAllFriends() {
     return db.collection("users").snapshots();

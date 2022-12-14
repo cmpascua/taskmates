@@ -10,16 +10,20 @@ import 'package:week7_networking_discussion/models/users_model.dart';
 import 'package:week7_networking_discussion/api/firebase_friends_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:week7_networking_discussion/providers/auth_provider.dart';
+import '../api/firebase_auth_api.dart';
 
 class FriendListProvider with ChangeNotifier {
+  late FirebaseAuthAPI authService;
   late FirebaseFriendAPI firebaseService;
   late Stream<QuerySnapshot> _friendsStream;
-  static String userID = AuthProvider().user!.uid;
+  // static String userID = AuthProvider().user!.uid;
+  String userID = "";
   var searchString = "";
   bool searchBoolean = false;
   AppUser? _selectedFriend;
 
   FriendListProvider() {
+    authService = FirebaseAuthAPI();
     firebaseService = FirebaseFriendAPI();
     fetchFriends();
   }
@@ -28,6 +32,10 @@ class FriendListProvider with ChangeNotifier {
   AppUser get selected => _selectedFriend!;
   String get searchText => searchString;
   bool get searchBool => searchBoolean;
+
+  void saveUserID() {
+    userID = authService.getUserID();
+  }
 
   changeSelectedFriend(String itemID, AppUser item) {
     item.id = itemID;
@@ -50,13 +58,17 @@ class FriendListProvider with ChangeNotifier {
   }
 
   void sendRequest() async {
+    saveUserID();
     String message =
         await firebaseService.sendRequest(userID, _selectedFriend!.id);
+    print("Selected Friend ID is...");
+    print(_selectedFriend!.id);
     print(message);
     notifyListeners();
   }
 
   void unfriend() async {
+    saveUserID();
     String message =
         await firebaseService.unfriend(userID, _selectedFriend!.id);
     print(message);
